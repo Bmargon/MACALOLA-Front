@@ -25,5 +25,8 @@ export default {
     height: 100vh;
     background-color: $-color-admin;
   }
+  &__content {
+    padding: 2rem;
+  }
 }
 </style>

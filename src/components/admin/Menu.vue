@@ -13,8 +13,14 @@
           i(class="fas fa-store-slash")
           router-link(:to="{name: ''}") Devoluciones
         li
+          i(class="fas fa-boxes")
+          router-link(:to="{name: ''}") Productos
+        li
           i(class="fas fa-user")
           router-link(:to="{name: ''}") Usuarios
+        li
+          i(class="fas fa-sign-out-alt")
+          router-link(:to="{name: ''}") Cerrar sesión
 </template>
 
 <script>
