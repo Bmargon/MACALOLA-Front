@@ -1,23 +1,28 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+// Componentes
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  // ==========================
+  // PUBLIC ROUTES
+  // =
   {
     path: "/",
     name: "Home",
+    title: "macalola",
     component: Home
   },
+  // ==========================
+  // PRIVATE ROUTES
+  // ==========================
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/administration",
+    name: "admin",
+    title: "macalola - administracion",
+    component: () => import('@/views/admin/AdminDashboard')
   }
 ];
 
