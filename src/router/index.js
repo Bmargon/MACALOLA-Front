@@ -12,8 +12,10 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    title: "macalola",
-    component: Home
+    component: Home,
+    meta: {
+      title: "macalola",
+    }
   },
   // ==========================
   // PRIVATE ROUTES
@@ -21,7 +23,9 @@ const routes = [
   {
     path: "/administration",
     name: "admin",
-    title: "macalola - administracion",
+    meta: {
+      title: "administracion",
+    },
     component: () => import('@/views/admin/AdminDashboard')
   }
 ];
