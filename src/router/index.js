@@ -1,33 +1,24 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 // Componentes
-import Home from "../views/Home.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
   // ==========================
   // PUBLIC ROUTES
   // =
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-    meta: {
-      title: "macalola",
-    }
-  },
+  { path: "/", name: "Home", component: () => import('@/views/Home'), },
   // ==========================
   // PRIVATE ROUTES
   // ==========================
-  {
-    path: "/administration",
-    name: "admin",
-    meta: {
-      title: "administracion",
-    },
-    component: () => import('@/views/admin/AdminDashboard')
-  }
+  { path: "/administration", name: "admin", component: () => import('@/components/shared/RouterView'), children:[
+    {path: 'access', component: () => import('@/views/admin/AdminAcces')},
+    {path: '', component: () => import('@/views/admin/Layout'), children: [
+      {path: 'orders', name: 'orders', component: () => import('@/views/admin/Orders')}
+    ]}
+      // {path: 'orders', component: () => import('@/views/admin/Orders')}
+ 
+  ]}
 ];
 
 const router = new VueRouter({

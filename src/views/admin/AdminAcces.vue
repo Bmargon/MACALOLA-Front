@@ -1,5 +1,6 @@
 <template lang="pug">
   section.admin-panel
+    router-view
     .admin-panel__panel
       h1.admin-panel__title Panel de aministración Macalola
       b-form.admin-panel__form(@submit.prevent="logIn")
@@ -14,7 +15,6 @@
           placeholder="Contraseña")
         p(v-if="$v.formFields.password.$error") La contraseña es obligatoria
         b-button(type="submit").admin-panel__button Acceder
-  
 </template>
 
 <script>
