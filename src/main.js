@@ -6,12 +6,14 @@ import store from "./store";
 import '@/assets/scss/main.scss'
 import { BootstrapVue } from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
-Vue.config.productionTip = false;
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.use(Vuelidate)
 Vue.use(BootstrapVue)
 
 
+Vue.config.productionTip = false;
 new Vue({
   router,
   store,

@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoepd>
+<style lang="scss" scoped>
 p {
   color: $-error;
 }
