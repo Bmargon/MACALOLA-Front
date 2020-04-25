@@ -4,16 +4,16 @@
     div.sidebar__menu
       ul
         li
-          i(class="fab fa-medium")
+          i(class="fas fa-home")
           router-link(:to="{name: ''}") Home
         li
-          i(class="fab fa-medium")
+          i(class="fas fa-cart-arrow-down")
           router-link(:to="{name: ''}") Pedidos
         li
-          i(class="fab fa-medium")
+          i(class="fas fa-store-slash")
           router-link(:to="{name: ''}") Devoluciones
         li
-          i(class="fab fa-medium")
+          i(class="fas fa-user")
           router-link(:to="{name: ''}") Usuarios
 </template>
 
@@ -32,10 +32,11 @@ a{
 }
 li {
   list-style: none;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 svg{
+  transform: scale(1.5);
   color: white;
-  margin-right: 1rem;
+  margin-right: 2rem;
 }
 </style>
