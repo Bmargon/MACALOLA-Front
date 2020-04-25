@@ -4,19 +4,21 @@
       h1.admin-panel__title Panel de aministración Macalola
       b-form.admin-panel__form(@submit.prevent="logIn")
         b-form-input(
+          v-model.lazy="$v.formFields.email.$model"
           type="email"
-          v-model="formFields.email"
           placeholder="Correo electrónico")
+        p(v-if="$v.formFields.email.$error") El email no es valido
         b-form-input(
-          v-model="formFields.password" 
+          v-model="$v.formFields.password.$model" 
           type="password" 
           placeholder="Contraseña")
+        p(v-if="$v.formFields.password.$error") La contraseña es obligatoria
         b-button(type="submit").admin-panel__button Acceder
   
 </template>
 
 <script>
-
+import { required, email } from 'vuelidate/lib/validators'
 export default {
   data () {
     return {
@@ -26,9 +28,21 @@ export default {
       }
     }
   },
+  validations: {
+    formFields: {
+      email: { required, email },
+      password: { required }
+    }
+  },
   methods: {
     logIn () {
-      console.log('formulari enviado')
+      if (this.$v.$invalid) {
+        this.$bvToast.toast('El formulario no es correcto', {
+          title: ``,
+          variant: 'danger',
+          solid: true
+        })
+      }
     }
   },
   created() {
@@ -37,6 +51,9 @@ export default {
 </script>
 
 <style lang="scss" scoepd>
+p {
+  color: $-error;
+}
 .form-control {
   width: 100%;
   height: 80px;
@@ -77,7 +94,7 @@ export default {
       width: 100%;
       height: 50px;
       border-radius: 10px;
-      background: #6675df;
+      background: $-color-admin;
       font-size: 12px;
       color: $-white;
       line-height: 1.2;

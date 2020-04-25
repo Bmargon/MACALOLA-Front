@@ -5,11 +5,11 @@ import router from "./router";
 import store from "./store";
 import '@/assets/scss/main.scss'
 import { BootstrapVue } from 'bootstrap-vue'
-
-
-
-Vue.use(BootstrapVue)
+import Vuelidate from 'vuelidate'
 Vue.config.productionTip = false;
+
+Vue.use(Vuelidate)
+Vue.use(BootstrapVue)
 
 
 new Vue({
