@@ -8,19 +8,17 @@
           router-link(:to="{name: 'adminhome'}") Home
         li
           i(class="fas fa-cart-arrow-down")
-          router-link(:to="{name: ''}") Pedidos
+          router-link(:to="{name: 'orders'}") Pedidos
         li
           i(class="fas fa-store-slash")
-          router-link(:to="{name: ''}") Devoluciones
+          router-link(:to="{name: 'returns'}") Devoluciones
         li
           i(class="fas fa-boxes")
-          router-link(:to="{name: ''}") Productos
+          router-link(:to="{name: 'products'}") Productos
         li
           i(class="fas fa-user")
-          router-link(:to="{name: ''}") Usuarios
-        li
-          i(class="fas fa-sign-out-alt")
-          router-link(:to="{name: ''}") Cerrar sesión
+          router-link(:to="{name: 'users'}") Usuarios
+
 </template>
 
 <script>
@@ -31,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 a{
-  color: $-white;
+  color: $-black;
   list-style: none;
   font-size: 1.4rem;
   text-decoration: none;
@@ -42,7 +40,7 @@ li {
 }
 svg{
   transform: scale(1.5);
-  color: white;
+  color: $-black;
   margin-right: 2rem;
 }
 </style>

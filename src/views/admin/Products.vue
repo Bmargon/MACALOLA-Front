@@ -1,6 +1,6 @@
 <template lang="pug">
   section
-    h1 Pedidos 
+    h1 Productos 
     hr
 </template>
 <script>

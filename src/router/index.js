@@ -14,8 +14,11 @@ const routes = [
   { path: "/administration", name: "admin", component: () => import('@/components/shared/RouterView'), children:[
     {path: 'access', component: () => import('@/views/admin/AdminAcces')},
     {path: '', component: () => import('@/views/admin/Layout'), children: [
+      {path: 'home', name: 'adminhome', component: () => import('@/views/admin/Home')},
       {path: 'orders', name: 'orders', component: () => import('@/views/admin/Orders')},
-      {path: 'home', name: 'adminhome', component: () => import('@/views/admin/Home')}
+      {path: 'products', name: 'products', component: () => import('@/views/admin/Products')},
+      {path: 'users', name: 'users', component: () => import('@/views/admin/Users')},
+      {path: 'returns', name: 'returns', component: () => import('@/views/admin/Returns')},
     ]}
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  
