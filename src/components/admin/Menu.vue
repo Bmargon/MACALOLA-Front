@@ -5,7 +5,7 @@
       ul
         li
           i(class="fas fa-home")
-          router-link(:to="{name: ''}") Home
+          router-link(:to="{name: 'adminhome'}") Home
         li
           i(class="fas fa-cart-arrow-down")
           router-link(:to="{name: ''}") Pedidos

@@ -20,6 +20,9 @@ export default {
   display: flex;
   
   &__menu{
+    position: sticky;
+    left: 0;
+    top: 0;
     padding-top: 2rem;
     width: 300px;
     height: 100vh;
@@ -27,6 +30,7 @@ export default {
   }
   &__content {
     padding: 2rem;
+    width: 100%;
   }
 }
 </style>
