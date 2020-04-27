@@ -28,6 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 a{
   color: $-black;
   list-style: none;
