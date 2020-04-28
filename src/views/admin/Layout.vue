@@ -53,6 +53,7 @@ export default {
   }
   &__content {
     padding: 2rem;
+    width: 100%;
   }
 }
 </style>
