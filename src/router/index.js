@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 // Componentes
 Vue.use(VueRouter);
 
@@ -13,7 +14,13 @@ const routes = [
   // ==========================
   { path: "/administration", name: "admin", component: () => import('@/components/shared/RouterView'), children:[
     {path: 'access', component: () => import('@/views/admin/AdminAcces')},
-    {path: '', component: () => import('@/views/admin/Layout'), children: [
+    {path: '', component: () => import('@/views/admin/Layout'),  beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('adminToken')) {
+        next()
+      } else {
+        next({path: '/administration/access'})
+      }
+    }, children: [
       {path: 'home', name: 'adminhome', component: () => import('@/views/admin/Home')},
       {path: 'orders', name: 'orders', component: () => import('@/views/admin/Orders')},
       {path: 'products', name: 'products', component: () => import('@/views/admin/Products')},
@@ -22,8 +29,21 @@ const routes = [
     ]}
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  
-  ]}
+  ]},
+  { path: "*", component: () => import('@/views/Home') }
 ];
+// console.log(store.getters.adminToken);
+
+// routes.beforeEach((to, from, next) => {
+//   if (to.matched.some(route => route.meta.requiresAuth)) {
+//     if ('') {
+//       next();
+//     } else {
+//       next({ name: 'admin' });
+//     }
+//   }
+//   next();
+// });
 
 const router = new VueRouter({
   mode: "history",

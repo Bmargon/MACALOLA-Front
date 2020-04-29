@@ -5,7 +5,8 @@
       b-badge.mr-3(pill variant="success") Administrador
       div.mr-3
         span.mr-2.topbar__out Cerrar sesión
-        i.__icon(class="fas fa-sign-out-alt")
+        b-button(variant="text" @click="logOut")
+          i.__icon(class="fas fa-sign-out-alt")
     article.admin
       Menu.admin__menu
       router-view.admin__content
@@ -16,7 +17,21 @@ import Menu from '@/components/admin/Menu'
 export default {
   components: {
     Menu
-  }
+  },
+  methods: {
+    logOut () {
+      localStorage.removeItem('adminToken')
+      this.$bvToast.toast('Sesion cerrada', {
+          title: `correctamente`,
+          variant: 'success',
+          autoHideDelay: 3000,
+          solid: true
+        })
+        setTimeout(() => {
+          this.$router.push({path: '/administration/access'})
+        }, 1000);
+    }
+  },
 }
 </script>
 
@@ -44,6 +59,7 @@ export default {
   display: flex;
   
   &__menu{
+    min-height: 100%;
     left: 0px;
     box-shadow: 0 10px 30px rgba(59, 43, 91, 0.1); 
     padding-top: 2rem;

@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { required, email } from 'vuelidate/lib/validators'
+
 export default {
   data () {
     return {
@@ -35,7 +37,7 @@ export default {
     }
   },
   methods: {
-    logIn () {
+    async logIn () {
       if (this.$v.$invalid) {
         this.$bvToast.toast('El formulario no es correcto', {
           title: ``,
@@ -43,10 +45,23 @@ export default {
           solid: true
         })
       }
+      try {
+        const formdata = new FormData()
+        formdata.append("email", this.formFields.email)
+        formdata.append("password", this.formFields.password)
+        let userResponse = await axios.post('http://localhost:3000/login-admin', this.formFields)
+        localStorage.setItem('adminToken', userResponse.data.token)
+        this.$router.push({name: 'adminhome'})
+        console.log(userResponse);
+      } catch (error) {
+        this.$bvToast.toast('Usuario incorrecto', {
+          title: ``,
+          variant: 'danger',
+          solid: true
+        })
+      }
     }
-  },
-  created() {
-  },
+  }
 }
 </script>
 
