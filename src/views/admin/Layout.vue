@@ -8,7 +8,6 @@
         i.__icon(class="fas fa-sign-out-alt")
     article.admin
       Menu.admin__menu
-        span hola
       router-view.admin__content
 </template>
 
@@ -22,7 +21,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .topbar{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   z-index: 10;
