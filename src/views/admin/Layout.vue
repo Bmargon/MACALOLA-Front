@@ -46,10 +46,11 @@ export default {
   display: flex;
   
   &__menu{
+    left: 0px;
     box-shadow: 0 10px 30px rgba(59, 43, 91, 0.1); 
     padding-top: 2rem;
     width: 300px;
-    height: 100vh;
+    min-height: 100%;
   }
   &__content {
     padding: 2rem;
