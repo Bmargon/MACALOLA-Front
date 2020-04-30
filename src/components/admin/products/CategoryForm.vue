@@ -41,7 +41,7 @@ export default {
     },
     async postCategory() {
      try {
-       let token = localStorage.getItem('adminToken')
+       let token = sessionStorage.getItem('adminToken')
         await axios.post('http://localhost:3000/category', this.category, {
         headers: {
           'authorization': token,
@@ -50,12 +50,16 @@ export default {
       await this.getCategories()
       //this.$forceUpdate()
      } catch (error) {
-       console.log(error);
+       this.$bvToast.toast('Error', {
+          title: `No se pudo crear la categoria`,
+          variant: 'danger',
+          solid: true
+        })
      }
     },
     async removeCategory (index) {
       try {
-        let token = localStorage.getItem('adminToken')
+        let token = sessionStorage.getItem('adminToken')
         let id = this.categories[index]._id
         await axios.delete(`http://localhost:3000/category/${id}`, {
           headers: {
@@ -64,7 +68,11 @@ export default {
         })
         await this.getCategories()
       } catch (error) {     
-        console.log(error);
+        this.$bvToast.toast('Error', {
+          title: `No se pudo borrar la categoria`,
+          variant: 'danger',
+          solid: true
+        })
       }
     }
   },

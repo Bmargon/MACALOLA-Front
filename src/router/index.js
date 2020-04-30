@@ -15,7 +15,7 @@ const routes = [
   { path: "/administration", name: "admin", component: () => import('@/components/shared/RouterView'), children:[
     {path: 'access', component: () => import('@/views/admin/AdminAcces')},
     {path: '', component: () => import('@/views/admin/Layout'),  beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('adminToken')) {
+      if (sessionStorage.getItem('adminToken')) {
         next()
       } else {
         next({path: '/administration/access'})

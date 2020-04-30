@@ -50,7 +50,7 @@ export default {
         formdata.append("email", this.formFields.email)
         formdata.append("password", this.formFields.password)
         let userResponse = await axios.post('http://localhost:3000/login-admin', this.formFields)
-        localStorage.setItem('adminToken', userResponse.data.token)
+        sessionStorage.setItem('adminToken', userResponse.data.token)
         this.$router.push({name: 'adminhome'})
         console.log(userResponse);
       } catch (error) {

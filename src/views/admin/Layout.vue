@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     logOut () {
-      localStorage.removeItem('adminToken')
+      sessionStorage.removeItem('adminToken')
       this.$bvToast.toast('Sesion cerrada', {
           title: `correctamente`,
           variant: 'success',
