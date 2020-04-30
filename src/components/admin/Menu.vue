@@ -1,6 +1,7 @@
 <template lang="pug">
   section.sidebar
-    //- div aqui va el logo
+    div.sidebar__img
+      img(src="https://res.cloudinary.com/macalola/image/upload/v1588232928/logo/logo_o2hsci.png", alt="alt")
     div.sidebar__menu
       ul
         li
@@ -28,7 +29,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.sidebar {
+  height: 100%;
+  &__img {
+    text-align: center;
+  }
+}
+img {
+  width: 200px;
+  margin-bottom: 2rem;
+}
 a{
   color: $-black;
   list-style: none;
