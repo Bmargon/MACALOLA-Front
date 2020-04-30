@@ -153,6 +153,7 @@ export default {
       formData.append('description', this.form.description)
       formData.append('stock', this.form.stock)
       formData.append('accesory', this.form.accesory)
+      formData.append('totalStock', this.form.totalStock)
       formData.append('category', this.form.category)
       formData.append('img', this.form.img)
 
@@ -164,8 +165,44 @@ export default {
           })
         })
       }
-      //await axios.post('http://localhost:3000/' , formData)
-      console.log(this.form);
+      
+      try {
+        //await axios.post('http://localhost:3000/' , formData)
+        console.log(this.form);
+        this.$bvToast.toast('Error', {
+          title: `Producto creado`,
+          variant: 'success',
+          solid: true
+        })
+
+        this.form.provider = ''
+        this.form.buyDate = ''
+        this.form.season = ''
+        this.form.name = ''
+        this.form.purchasePrice = 0
+        this.form.salePrice =  0
+        this.form.percentage = 0
+        this.form.promotionOn = false
+        this.form.referenceNumberCommon = ''
+        this.form.description = ''
+        this.form.stock = 0
+        this.form.accesory = false
+        this.form.totalStock = [{ref: '', color: '', quantity: [ 
+            {size: '', units: 0}
+          ]}]
+        this.form.category = ''
+        this.form.img = null
+
+      }  catch (error) {
+        this.$bvToast.toast('Error', {
+          title: `No se pudo crear el producto`,
+          variant: 'danger',
+          solid: true
+        })
+        console.log(error);
+      } finally {
+
+      }
     },
     addQuantity (i) {
       this.form.stock[i].quantity.push({size: '', units: 0})
@@ -191,6 +228,5 @@ export default {
   created() {
     this.getCategories()
   }
-
 }
 </script>

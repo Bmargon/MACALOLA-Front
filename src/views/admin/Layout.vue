@@ -57,9 +57,9 @@ export default {
   width: 100%;
   min-height: 100%;
   display: flex;
+  height: 100vh;
   
   &__menu{
-    min-height: 100%;
     left: 0px;
     box-shadow: 0 10px 30px rgba(59, 43, 91, 0.1); 
     padding-top: 2rem;

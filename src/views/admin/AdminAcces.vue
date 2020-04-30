@@ -2,7 +2,9 @@
   section.admin-panel
     router-view
     .admin-panel__panel
-      h1.admin-panel__title Panel de aministración Macalola
+      div.admin-panel__img.mb-3
+        img(src="https://res.cloudinary.com/macalola/image/upload/v1588232928/logo/logo_o2hsci.png", alt="alt")
+      h1.admin-panel__title Panel de aministración
       b-form.admin-panel__form(@submit.prevent="logIn")
         b-form-input(
           v-model.lazy="$v.formFields.email.$model"
@@ -91,6 +93,13 @@ p {
       display: block;
       background-color: $-white-2;
       padding: 173px 55px 55px 55px;
+    }
+    &__img {
+    display: flex;
+    justify-content: center;
+      img {
+        width: 350px;
+      }
     }
     &__title {
       text-align: center;
