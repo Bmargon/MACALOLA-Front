@@ -43,31 +43,37 @@ b-overlay(:show="loading" opacity="0.6" rouded)
             b-col
               b-form-group(:disabled="disabledFields" label="Precio de venta")
                 b-form-input(v-model="form.salePrice" type="number")
-            b-col
+            b-col(v-if="form.promotionOn")
               b-form-group(:disabled="disabledFields" label="Porcentaje")
                 b-form-input(v-model="form.percentage" type="number")
             b-col(v-if="form.promotionOn")
               b-form-group(disabled label="Precio con porcentaje")
-                b-form-input(v-model="form.priceWithDiscount" type="number")
+                b-form-input(:placeholder="checkPromotion" type="number")
+
+          b-row()
+           b-form-group(:disabled="disabledFields" label="Accesorio")
+                b-form-checkbox(v-model="form.accesory")
           b-row(v-if="!product.accesory")
            b-form-group( label="Stock")
             hr
             b-row(v-for="(item, index) in form.stock" :key="index" )
       
-              b-button.mt-3(variant="link" @click="removeItem(index)")
+              b-button.mt-3( :disabled="disabledFields" variant="link" @click="removeItemFromStock(index)")
                 i(class="fas fa-minus")
-              b-button.mt-3(variant="link" @click="addItem()")
+              b-button.mt-3(:disabled="disabledFields" variant="link" @click="addItem()")
                 i(class="fas fa-plus")
     
               b-col
                 b-form-group( label="Referencia")
                 b-input(
+                  :disabled="disabledFields"
                   v-model="item.ref"
                   class="mb-2 mr-sm-2 mb-sm-0"
                   :placeholder="item.ref")
               b-col
                 b-form-group( label="Color")
                 b-input( 
+                  :disabled="disabledFields"
                   v-model="item.color"
                   class="mb-2 mr-sm-2 mb-sm-0"
                   :placeholder="item.color")
@@ -75,13 +81,13 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                 b-row(v-for="(units, i) in item.quantity" :key="i").mt-3
                   b-col
                     b-form-group( label="Talla")
-                      b-input( v-model="units.size")
+                      b-input(:disabled="disabledFields"  v-model="units.size")
                   b-col
                     b-form-group( label="Cantidad")
-                      b-input(type="number" v-model="units.units")
-                  b-button(variant="link" @click="addQuantity(index)")
+                      b-input(:disabled="disabledFields" type="number" v-model="units.units")
+                  b-button(:disabled="disabledFields" variant="link" @click="addQuantity(index)")
                     i(class="fas fa-plus")
-                  b-button(variant="link" @click="removeQuantity(index)")
+                  b-button(:disabled="disabledFields" variant="link" @click="removeQuantity(index)")
                     i(class="fas fa-minus")
 
           b-row
@@ -110,7 +116,8 @@ export default {
         stock: [],
         promotionOn: '',
         img: null,
-        priceWithDiscount: ''
+        accesory: '',
+        priceWithDiscount: 0
       }
     }
   },
@@ -132,24 +139,55 @@ export default {
     editItem () {
       this.disabledFields = !this.disabledFields
     },
+    addQuantity (i) {
+      this.form.stock[i].quantity.push({size: '', units: 0})
+    },
+    addItem() {
+      this.form.stock.push({ref: '', color: '', quantity: [ 
+        {size: '', units: 0}
+      ]})
+    },
+    removeItemFromStock(i) {
+      if (this.form.stock.length === 1) {
+        return
+      }
+      this.form.stock.splice(i, 1)
+    },
+    removeQuantity (i) {
+      if (this.form.stock[i].quantity.length === 1) {
+        return
+      }
+      this.form.stock[i].quantity.splice(i, 1)
+    },
     async removeItem () {
       try {
+        this.loading = true
         await axios.delete(`http://localhost:3000/product/${this.form.referenceNumberCommon}`, {
           headers: {
             'authorization': sessionStorage.getItem('adminToken'),
           }
         })
-
+        this.$router.push({path: '/administration/products'})
       } catch (error) {
         this.$bvToast.toast('Error', {
           title: `al borrar producto`,
           variant: 'danger',
           solid: true
         })
+      } finally {
+        this.loading = false
       }
     },
     async saveItem() {
       try {
+         if (!this.form.accesory) {
+        this.form.totalStock = 0
+        this.form.stock.forEach((item) => {
+            item.quantity.forEach((element) => {
+              this.form.totalStock += Number(element.units)
+            })
+          })
+        }
         this.loading = true
         const formData = new FormData()
         formData.append('provider', this.form.provider)
@@ -161,7 +199,7 @@ export default {
         formData.append('percentage', this.form.percentage)
         formData.append('promotionOn', this.form.promotionOn)
         formData.append('description', this.form.description)
-        formData.append('stock', this.form.stock || [])
+        formData.append('stock', JSON.stringify(this.form.stock) || [])
         formData.append('accesory', this.form.accesory)
         formData.append('totalStock', this.form.totalStock)
         formData.append('category', this.form.category)

@@ -26,7 +26,7 @@
           name="promotionOn"
           )
           
-      b-form-group( label="Porcentaje")
+      b-form-group( label="Porcentaje" v-if="form.promotionOn")
         b-form-input(:disabled="!form.promotionOn" v-model="form.percentage" type="number" required)
 
       b-form-group( v-if="form.promotionOn" label="Precio con porcentaje aplicado")
@@ -120,7 +120,7 @@ export default {
         accesory: false,
         category: '',
         img: null,
-        priceWithDiscount: ''
+        priceWithDiscount: 0
       }
     }
   },
@@ -136,8 +136,15 @@ export default {
   },
   methods: {
     ...mapActions(['getCategories']),
-
     async onSubmit () {
+      if (!this.form.accesory) {
+        this.form.stock.forEach((item) => {
+          item.quantity.forEach((element) => {
+            this.form.totalStock += Number(element.units)
+          })
+        })
+      }
+      
       const formData = new FormData()
       formData.append('provider', this.form.provider)
       formData.append('buyDate', this.form.buyDate)
@@ -149,21 +156,13 @@ export default {
       formData.append('promotionOn', this.form.promotionOn)
       formData.append('referenceNumberCommon', this.form.referenceNumberCommon)
       formData.append('description', this.form.description)
-      formData.append('stock', this.form.stock || [])
+      formData.append('stock', JSON.stringify(this.form.stock) || [])
       formData.append('accesory', this.form.accesory)
       formData.append('totalStock', this.form.totalStock)
       formData.append('category', this.form.category)
       formData.append('img', this.form.img)
 
       // Calcular el total de todos los productos si no es accesorio
-      if (!this.form.accesory) {
-        this.form.stock.forEach((item) => {
-          item.quantity.forEach((element) => {
-            this.form.totalStock += Number(element.units)
-          })
-        })
-      }
-      
       try {
         this.loading = true
         await axios.post('http://localhost:3000/product', formData, {
