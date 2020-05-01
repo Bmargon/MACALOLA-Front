@@ -2,9 +2,10 @@
 b-overlay(:show="loading" opacity="0.6" rouded)
   section.product
     b-row.product__options
-      b-button.mr-3(variant="success" :disabled="disabledFields" ) Guardar
-      b-button.mr-3(variant="secondary" @click="editItem") Editar
-      b-button(variant="danger") Eliminar
+
+        b-button.mr-3(variant="success" :disabled="disabledFields" @click="saveItem" ) Guardar
+        b-button.mr-3(variant="secondary" @click="editItem") Editar
+        b-button(variant="danger" @click="removeItem") Eliminar
 
     b-row.product__row
       b-col(cols="4")
@@ -14,7 +15,7 @@ b-overlay(:show="loading" opacity="0.6" rouded)
         b-form
           b-row
             b-col
-              b-form-group(:disabled="disabledFields" label="Nº de Referencia")
+              b-form-group(disabled label="Nº de Referencia")
                 b-form-input(v-model="form.referenceNumberCommon")
             b-col
               b-form-group(:disabled="disabledFields" label="Proveedor")
@@ -38,16 +39,16 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                 b-form-checkbox(v-model="form.promotionOn")
             b-col
               b-form-group(:disabled="disabledFields" label="Precio de compra")
-                b-form-input(v-model="form.purchasePrice")
+                b-form-input(v-model="form.purchasePrice" type="number")
             b-col
               b-form-group(:disabled="disabledFields" label="Precio de venta")
-                b-form-input(v-model="form.salePrice")
+                b-form-input(v-model="form.salePrice" type="number")
             b-col
               b-form-group(:disabled="disabledFields" label="Porcentaje")
-                b-form-input(v-model="form.percentage" :placeholder="checkPromotion")
+                b-form-input(v-model="form.percentage" type="number")
             b-col(v-if="form.promotionOn")
-              b-form-group(:disabled="disabledFields" label="Precio con porcentaje")
-                b-form-input(v-model="form.priceWithDiscount")
+              b-form-group(disabled label="Precio con porcentaje")
+                b-form-input(v-model="form.priceWithDiscount" type="number")
           b-row(v-if="!product.accesory")
            b-form-group( label="Stock")
             hr
@@ -88,6 +89,7 @@ b-overlay(:show="loading" opacity="0.6" rouded)
               b-form-file( :disabled="disabledFields" v-model="form.img" type="file" accept="image/jpeg, image/png")
 </template>
 <script>
+import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'GetSingleProduct',
@@ -107,7 +109,7 @@ export default {
         percentage: 0,
         stock: [],
         promotionOn: '',
-        img: '',
+        img: null,
         priceWithDiscount: ''
       }
     }
@@ -118,6 +120,10 @@ export default {
       if (!this.form.promotionOn) {
         this.form.percentage = 0
         return 0
+      } else {
+        let final = this.form.salePrice * (this.form.percentage / 100)
+        this.form.priceWithDiscount = this.form.salePrice - final
+        return this.form.priceWithDiscount
       }
     }
   },
@@ -125,21 +131,63 @@ export default {
     ...mapActions(['getSingleProduct']),
     editItem () {
       this.disabledFields = !this.disabledFields
-      const formData = new FormData()
-      formData.append('provider', this.form.provider)
-      formData.append('buyDate', this.form.buyDate)
-      formData.append('season', this.form.season)
-      formData.append('name', this.form.name)
-      formData.append('purchasePrice', this.form.purchasePrice)
-      formData.append('salePrice', this.form.priceWithDiscount || this.form.salePrice)
-      formData.append('percentage', this.form.percentage)
-      formData.append('promotionOn', this.form.promotionOn)
-      formData.append('description', this.form.description)
-      formData.append('stock', this.form.stock || [])
-      formData.append('accesory', this.form.accesory)
-      formData.append('totalStock', this.form.totalStock)
-      formData.append('category', this.form.category)
-      formData.append('img', this.form.img)
+    },
+    async removeItem () {
+      try {
+        await axios.delete(`http://localhost:3000/product/${this.form.referenceNumberCommon}`, {
+          headers: {
+            'authorization': sessionStorage.getItem('adminToken'),
+          }
+        })
+
+      } catch (error) {
+        this.$bvToast.toast('Error', {
+          title: `al borrar producto`,
+          variant: 'danger',
+          solid: true
+        })
+      }
+    },
+    async saveItem() {
+      try {
+        this.loading = true
+        const formData = new FormData()
+        formData.append('provider', this.form.provider)
+        formData.append('buyDate', this.form.buyDate)
+        formData.append('season', this.form.season)
+        formData.append('name', this.form.name)
+        formData.append('purchasePrice', this.form.purchasePrice)
+        formData.append('salePrice', this.form.priceWithDiscount === 0 ? this.form.salePrice : this.form.priceWithDiscount)
+        formData.append('percentage', this.form.percentage)
+        formData.append('promotionOn', this.form.promotionOn)
+        formData.append('description', this.form.description)
+        formData.append('stock', this.form.stock || [])
+        formData.append('accesory', this.form.accesory)
+        formData.append('totalStock', this.form.totalStock)
+        formData.append('category', this.form.category)
+        formData.append('img', this.form.img)
+        await axios.put(`http://localhost:3000/product/${this.form.referenceNumberCommon}`, formData, {
+          headers: {
+            'content-type': 'multipart/form-data',
+            'authorization': sessionStorage.getItem('adminToken'),
+          }
+        })
+        this.$bvToast.toast('Ok:)', {
+          title: `Producto actualizado correctamente`,
+          variant: 'success',
+          solid: true
+        })
+        this.$router.push({path: '/administration/products'})
+      } catch (error) {
+        this.$bvToast.toast('Error', {
+          title: `No se pudo actualizar el producto`,
+          variant: 'danger',
+          solid: true
+        })
+      } finally{
+        this.loading = false
+      }
+
     }
   },
   async created() {
@@ -157,10 +205,15 @@ export default {
       this.form.percentage = this.product.percentage
       this.form.stock = this.product.stock
       this.form.promotionOn = this.product.promotionOn
-      this.form.img = this.product.img
+      this.form.accesory = this.product.accesory
       this.form.priceWithDiscount = this.product.salePrice
+      this.form.category = this.product.category
     } catch (error) {
-      console.log(error)
+      this.$bvToast.toast('Error', {
+          title: `No se pudo obtener el producto`,
+          variant: 'danger',
+          solid: true
+        })
     } finally {
       this.loading = false
     }

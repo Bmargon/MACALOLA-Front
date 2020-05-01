@@ -144,7 +144,7 @@ export default {
       formData.append('season', this.form.season)
       formData.append('name', this.form.name)
       formData.append('purchasePrice', this.form.purchasePrice)
-      formData.append('salePrice', this.form.priceWithDiscount || this.form.salePrice)
+      formData.append('salePrice', this.form.priceWithDiscount === 0 ? this.form.salePrice : this.form.priceWithDiscount)
       formData.append('percentage', this.form.percentage)
       formData.append('promotionOn', this.form.promotionOn)
       formData.append('referenceNumberCommon', this.form.referenceNumberCommon)
