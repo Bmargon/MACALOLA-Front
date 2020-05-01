@@ -24,6 +24,7 @@ const routes = [
       {path: 'home', name: 'adminhome', component: () => import('@/views/admin/Home')},
       {path: 'orders', name: 'orders', component: () => import('@/views/admin/Orders')},
       {path: 'products', name: 'products', component: () => import('@/views/admin/Products')},
+      {path: 'product/:ref', name: 'product', component: () => import('@/views/admin/GetSingleProduct')},
       {path: 'users', name: 'users', component: () => import('@/views/admin/Users')},
       {path: 'returns', name: 'returns', component: () => import('@/views/admin/Returns')},
     ]}

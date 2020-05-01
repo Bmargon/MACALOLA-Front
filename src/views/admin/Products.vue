@@ -3,35 +3,44 @@
     h1 {{title}} 
     hr
     b-nav(tabs)
-      b-nav-item(@click="setForm('Producto')") Producto
-      b-nav-item(@click="setForm('Categoria')") Categoria
+      b-nav-item(@click="setForm('Productos')") Productos
+      b-nav-item(@click="setForm('Crear Producto')") Crear Producto
+      b-nav-item(@click="setForm('Crear Categoria')") Crear Categoria
     
     .products__form
-      item-form(v-if="isItemForm")
-      category-form(v-else)
+      product-list(v-if="title === 'Productos'")
+      item-form(v-if="title === 'Crear Producto'")
+      category-form(v-if="title === 'Crear Categoria'")
 </template>
 <script>
 import ItemForm from '@/components/admin/products/ItemForm'
 import CategoryForm from '@/components/admin/products/CategoryForm'
+import ProductList from '@/components/admin/products/ProductList'
 export default {
   components: {
     ItemForm,
-    CategoryForm
+    CategoryForm,
+    ProductList
   },
   data () {
     return {
-      isItemForm: true,
-      title: 'Producto'
+      title: 'Productos'
     }
   },
   methods: {
-    setForm (form) {
-      if (form === 'Producto') {
-        this.isItemForm = true
-        this.title = form
-      } else {
-        this.title = form
-        this.isItemForm = false
+    setForm(form) {
+      switch(form) {
+        case 'Productos':
+          this.title = form
+          break
+        case 'Crear Producto':
+          this.title = form
+          break
+        case 'Crear Categoria':
+          this.title = form
+          break
+        default:
+          this.title = 'Productos'
       }
     }
   }

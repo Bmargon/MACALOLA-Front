@@ -1,5 +1,4 @@
 <template lang="pug">
-
   section.form
     b-form(@submit.prevent="onSubmit")
 
@@ -41,7 +40,7 @@
   
       b-form-group( label="Categoria")
         b-form-select(v-model="form.category")
-          b-form-select-option( v-for="category in categories" :key="category.referenceNumber" :value="category._id") {{category.name}}
+          b-form-select-option( v-for="category in categories" :key="category.name" :value="category._id") {{category.name}}
 
       b-form-group( label="Accesorio")
         b-form-checkbox(
@@ -49,7 +48,7 @@
           v-model="form.accesory")
   
       b-form-group( v-if="form.accesory" label="Total accesorios")
-        b-form-input(v-model="totalStock" type="number")
+        b-form-input(v-model="form.totalStock" type="number")
   
       .form__stock(v-if="!form.accesory")
         b-form-group( label="Stock")
@@ -86,10 +85,11 @@
                 b-button(variant="link" @click="removeQuantity(index)")
                   i(class="fas fa-minus")
       b-form-group( label="Imagen")
-        b-form-file( ref="file" v-model="form.img" type="file" accept="image/jpeg, image/png")
+        b-form-file(  v-model="form.img" type="file" accept="image/jpeg, image/png")
       br
       br
-      b-button(variant="outline-primary" type="submit") Crear
+      b-overlay(:show="loading" opacity="0.6" rouded)
+        b-button(block variant="outline-primary" type="submit") Crear
 
 </template>
 <script>
@@ -99,6 +99,7 @@ export default {
   name: 'ItemForm',
   data () {
     return {
+      loading: false,
       form: {
         provider: '',
         buyDate: '',
@@ -135,10 +136,7 @@ export default {
   },
   methods: {
     ...mapActions(['getCategories']),
-    // selectImg () {
-    //   console.log(this.$refs.file.files);
-    //   this.form.img = this.$refs.file.files[0]
-    // },
+
     async onSubmit () {
       const formData = new FormData()
       formData.append('provider', this.form.provider)
@@ -151,7 +149,7 @@ export default {
       formData.append('promotionOn', this.form.promotionOn)
       formData.append('referenceNumberCommon', this.form.referenceNumberCommon)
       formData.append('description', this.form.description)
-      formData.append('stock', this.form.stock)
+      formData.append('stock', this.form.stock || [])
       formData.append('accesory', this.form.accesory)
       formData.append('totalStock', this.form.totalStock)
       formData.append('category', this.form.category)
@@ -167,9 +165,15 @@ export default {
       }
       
       try {
-        //await axios.post('http://localhost:3000/' , formData)
-        console.log(this.form);
-        this.$bvToast.toast('Error', {
+        this.loading = true
+        await axios.post('http://localhost:3000/product', formData, {
+          headers: {
+            'content-type': 'multipart/form-data',
+            'authorization': sessionStorage.getItem('adminToken'),
+          }
+        })
+
+        this.$bvToast.toast('OK:)', {
           title: `Producto creado`,
           variant: 'success',
           solid: true
@@ -201,7 +205,7 @@ export default {
         })
         console.log(error);
       } finally {
-
+        this.loading = false
       }
     },
     addQuantity (i) {
