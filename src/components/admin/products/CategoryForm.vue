@@ -1,6 +1,5 @@
 <template lang="pug">
   section
-    h1
     b-row
       b-col
         b-row.mb-3
@@ -39,6 +38,7 @@ export default {
     addCategory() {
       this.createNew = true
     },
+    // CREAR CATEGORIA
     async postCategory() {
      try {
        let token = sessionStorage.getItem('adminToken')
@@ -47,8 +47,9 @@ export default {
           'authorization': token,
         }
       })
+      this.category.name = ''
+      this.category.referenceNumber = ''
       await this.getCategories()
-      //this.$forceUpdate()
      } catch (error) {
        this.$bvToast.toast('Error', {
           title: `No se pudo crear la categoria`,
@@ -57,6 +58,7 @@ export default {
         })
      }
     },
+    // ELIMINAR CATEGORIA
     async removeCategory (index) {
       try {
         let token = sessionStorage.getItem('adminToken')

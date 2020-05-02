@@ -11,25 +11,31 @@ b-overlay(:show="loading" opacity="0.6" rouded)
       b-col(cols="4")
         div.product__img
           img(:src="product.img", alt="alt")
+
       b-col(cols="8")
         b-form
           b-row
             b-col
               b-form-group(disabled label="Nº de Referencia")
                 b-form-input(v-model="form.referenceNumberCommon")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Proveedor")
                 b-form-input(v-model="form.provider")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Temporada")
                 b-form-input(v-model="form.season")
+
           b-row
             b-col
               b-form-group(:disabled="disabledFields" label="Nombre")
                 b-form-input(v-model="form.name")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Fecha de compra")
                 b-form-datepicker(v-model="form.buyDate")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Total Stock")
                 b-form-input(v-model="form.totalStock")
@@ -37,29 +43,37 @@ b-overlay(:show="loading" opacity="0.6" rouded)
             b-col()
               b-form-group(:disabled="disabledFields" label="Promocion")
                 b-form-checkbox(v-model="form.promotionOn")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Precio de compra")
                 b-form-input(v-model="form.purchasePrice" type="number")
+
             b-col
               b-form-group(:disabled="disabledFields" label="Precio de venta")
                 b-form-input(v-model="form.salePrice" type="number")
+                
             b-col(v-if="form.promotionOn")
               b-form-group(:disabled="disabledFields" label="Porcentaje")
                 b-form-input(v-model="form.percentage" type="number")
+
             b-col(v-if="form.promotionOn")
               b-form-group(disabled label="Precio con porcentaje")
                 b-form-input(:placeholder="checkPromotion" type="number")
 
           b-row()
-           b-form-group(:disabled="disabledFields" label="Accesorio")
-                b-form-checkbox(v-model="form.accesory")
-          b-row(v-if="!product.accesory")
+            b-form-group(:disabled="disabledFields" label="Accesorio").mr-5
+              b-form-checkbox(v-model="form.accesory")
+            b-form-group( v-if="form.accesory" label="Cantidad accesorio")
+              b-form-input( v-model="form.totalStock" type="number")
+
+          b-row(v-if="!form.accesory")
            b-form-group( label="Stock")
             hr
             b-row(v-for="(item, index) in form.stock" :key="index" )
       
               b-button.mt-3( :disabled="disabledFields" variant="link" @click="removeItemFromStock(index)")
                 i(class="fas fa-minus")
+
               b-button.mt-3(:disabled="disabledFields" variant="link" @click="addItem()")
                 i(class="fas fa-plus")
     
@@ -70,6 +84,7 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                   v-model="item.ref"
                   class="mb-2 mr-sm-2 mb-sm-0"
                   :placeholder="item.ref")
+
               b-col
                 b-form-group( label="Color")
                 b-input( 
@@ -77,6 +92,7 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                   v-model="item.color"
                   class="mb-2 mr-sm-2 mb-sm-0"
                   :placeholder="item.color")
+
               b-col
                 b-row(v-for="(units, i) in item.quantity" :key="i").mt-3
                   b-col
@@ -123,6 +139,7 @@ export default {
   },
   computed: {
     ...mapGetters(['product']),
+    // CALCULAR DESCUENTO
     checkPromotion() {
       if (!this.form.promotionOn) {
         this.form.percentage = 0
@@ -130,7 +147,7 @@ export default {
       } else {
         let final = this.form.salePrice * (this.form.percentage / 100)
         this.form.priceWithDiscount = this.form.salePrice - final
-        return this.form.priceWithDiscount
+        return stringify(this.form.priceWithDiscount)
       }
     }
   },
@@ -180,14 +197,15 @@ export default {
     },
     async saveItem() {
       try {
-         if (!this.form.accesory) {
+        if (!this.form.accesory) {
         this.form.totalStock = 0
         this.form.stock.forEach((item) => {
             item.quantity.forEach((element) => {
               this.form.totalStock += Number(element.units)
             })
           })
-        }
+        } 
+
         this.loading = true
         const formData = new FormData()
         formData.append('provider', this.form.provider)
@@ -204,25 +222,31 @@ export default {
         formData.append('totalStock', this.form.totalStock)
         formData.append('category', this.form.category)
         formData.append('img', this.form.img)
+
         await axios.put(`http://localhost:3000/product/${this.form.referenceNumberCommon}`, formData, {
           headers: {
             'content-type': 'multipart/form-data',
             'authorization': sessionStorage.getItem('adminToken'),
           }
         })
+
         this.$bvToast.toast('Ok:)', {
           title: `Producto actualizado correctamente`,
           variant: 'success',
           solid: true
         })
+
         this.$router.push({path: '/administration/products'})
+
       } catch (error) {
+
         this.$bvToast.toast('Error', {
           title: `No se pudo actualizar el producto`,
           variant: 'danger',
           solid: true
         })
       } finally{
+        
         this.loading = false
       }
 

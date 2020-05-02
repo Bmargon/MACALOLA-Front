@@ -1,5 +1,6 @@
 <template lang="pug">
   section.form
+
     b-form(@submit.prevent="onSubmit")
 
       b-form-group(label="Proveedor")
@@ -23,8 +24,7 @@
       b-form-group( label="En promocion")
         b-form-checkbox(
           v-model="form.promotionOn" 
-          name="promotionOn"
-          )
+          name="promotionOn")
           
       b-form-group( label="Porcentaje" v-if="form.promotionOn")
         b-form-input(:disabled="!form.promotionOn" v-model="form.percentage" type="number" required)
@@ -57,6 +57,7 @@
     
             b-button.mt-3(variant="link" @click="removeItem(index)")
               i(class="fas fa-minus")
+
             b-button.mt-3(variant="link" @click="addItem()")
               i(class="fas fa-plus")
   
@@ -66,12 +67,14 @@
                 v-model="item.ref"
                 class="mb-2 mr-sm-2 mb-sm-0"
                 :placeholder="item.ref")
+
             b-col
               b-form-group( label="Color")
               b-input( 
                 v-model="item.color"
                 class="mb-2 mr-sm-2 mb-sm-0"
                 :placeholder="item.color")
+
             b-col
               b-row(v-for="(units, i) in item.quantity" :key="i").mt-3
                 b-col
@@ -84,10 +87,12 @@
                   i(class="fas fa-plus")
                 b-button(variant="link" @click="removeQuantity(index)")
                   i(class="fas fa-minus")
+
       b-form-group( label="Imagen")
-        b-form-file(  v-model="form.img" type="file" accept="image/jpeg, image/png")
+        b-form-file(  required v-model="form.img" type="file" accept="image/jpeg, image/png")
+
       br
-      br
+
       b-overlay(:show="loading" opacity="0.6" rouded)
         b-button(block variant="outline-primary" type="submit") Crear
 
@@ -137,6 +142,7 @@ export default {
   methods: {
     ...mapActions(['getCategories']),
     async onSubmit () {
+      // CALCULAR EL TOTAL DE STOCK
       if (!this.form.accesory) {
         this.form.stock.forEach((item) => {
           item.quantity.forEach((element) => {
@@ -162,7 +168,6 @@ export default {
       formData.append('category', this.form.category)
       formData.append('img', this.form.img)
 
-      // Calcular el total de todos los productos si no es accesorio
       try {
         this.loading = true
         await axios.post('http://localhost:3000/product', formData, {
