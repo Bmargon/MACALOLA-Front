@@ -8,7 +8,9 @@ const routes = [
   // ==========================
   // PUBLIC ROUTES
   // =
-  { path: "/", name: "Home", component: () => import('@/views/Home'), },
+  { path: "/", name: "Home", component: () => import('@/views/public/Layout'), children: [
+    {path: '', name: 'home', component: () => import('@/views/public/Home')},
+  ] },
   // ==========================
   // PRIVATE ROUTES
   // ==========================
@@ -31,7 +33,7 @@ const routes = [
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  
   ]},
-  { path: "*", component: () => import('@/views/Home') }
+  { path: "*", component: () => import('@/views/public/Home') }
 ];
 // console.log(store.getters.adminToken);
 
