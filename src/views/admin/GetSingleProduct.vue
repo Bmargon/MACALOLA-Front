@@ -147,7 +147,7 @@ export default {
       } else {
         let final = this.form.salePrice * (this.form.percentage / 100)
         this.form.priceWithDiscount = this.form.salePrice - final
-        return stringify(this.form.priceWithDiscount)
+        return this.form.priceWithDiscount.toString()
       }
     }
   },
