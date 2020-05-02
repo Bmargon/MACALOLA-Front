@@ -37,8 +37,13 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                 b-form-datepicker(v-model="form.buyDate")
 
             b-col
-              b-form-group(:disabled="disabledFields" label="Total Stock")
+              b-form-group(disabled label="Total Stock")
                 b-form-input(v-model="form.totalStock")
+          b-row
+            b-col
+              b-form-group( label="Categoria")
+                b-form-select(:disabled="disabledFields" v-model="form.category")
+                  b-form-select-option( v-for="category in categories" :key="category.name" :value="category._id") {{category.name}}
           b-row
             b-col()
               b-form-group(:disabled="disabledFields" label="Promocion")
@@ -133,12 +138,13 @@ export default {
         promotionOn: '',
         img: null,
         accesory: '',
+        category: '',
         priceWithDiscount: 0
       }
     }
   },
   computed: {
-    ...mapGetters(['product']),
+    ...mapGetters(['product', 'categories']),
     // CALCULAR DESCUENTO
     checkPromotion() {
       if (!this.form.promotionOn) {
@@ -152,7 +158,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getSingleProduct']),
+    ...mapActions(['getSingleProduct', 'getCategories']),
     editItem () {
       this.disabledFields = !this.disabledFields
     },
@@ -253,6 +259,7 @@ export default {
     }
   },
   async created() {
+    this.getCategories()
     try {
       this.loading = true
       await this.getSingleProduct(this.$route.params.ref)
