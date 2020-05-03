@@ -17,7 +17,7 @@
         <b-nav-item href="#">OFERTAS</b-nav-item>
 
         <b-nav-item-dropdown text="PRODUCTOS" right>
-          <b-dropdown-item v-for="(item, i) in categories" :key="i">{{item.name}}</b-dropdown-item>
+          <b-dropdown-item v-for="(item, i) in categories" :key="i" @click="handleCategory(item)">{{item.name}}</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item href="#">CONTACTANOS</b-nav-item>
 
@@ -48,7 +48,11 @@ export default {
     ...mapGetters(['categories'])
   },
   methods: {
-    ...mapActions(['getCategories'])
+    ...mapActions(['getCategories']),
+    handleCategory(item) {
+      if (this.$route.params.cat === item.name.toLowerCase()) return
+      this.$router.push({path: item.name.toLowerCase() })
+    }
   },
   created() {
     this.getCategories()
