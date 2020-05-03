@@ -57,35 +57,35 @@
         </header>
         <div class="row">
           <div class="col-md-7 mb-5 mb-md-0">
-            <form id="contact-form" method="post" action="contact.php" class="form">
+            <form class="form">
               <div class="controls">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label for="name" class="form-label">Your firstname *</label>
-                      <input type="text" name="name" id="name" placeholder="Enter your firstname" required="required" class="form-control">
+                      <label for="name" class="form-label">Nombre</label>
+                      <input required v-model="form.name" type="text" name="name"  class="form-control">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="surname" class="form-label">Your lastname *</label>
-                      <input type="text" name="surname" id="surname" placeholder="Enter your  lastname" required="required" class="form-control">
+                      <input required v-model="form.surname" type="text" name="surname"   class="form-control">
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="email" class="form-label">Your email *</label>
-                  <input type="email" name="email" id="email" placeholder="Enter your  email" required="required" class="form-control">
+                  <label for="email" class="form-label">Correo electrónico</label>
+                  <input v-model="form.email" type="email" name="email"  required class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="message" class="form-label">Your message for us *</label>
-                  <textarea rows="4" name="message" id="message" placeholder="Enter your message" required="required" class="form-control"></textarea>
+                  <label for="message" class="form-label">Mesaje que quieres que recibamos</label>
+                  <textarea v-model="form.message" rows="4" name="message"  required="required" class="form-control"></textarea>
                 </div>
-                <button type="submit" class="btn btn-outline-dark">Send message</button>
+                <button @click.prevent="sendRequest" class="btn btn-outline-dark">Enviar solicitud</button>
               </div>
             </form>
           </div>
-          <div class="col-md-5">
+          <!-- <div class="col-md-5">
             <p class="text-muted">Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed. </p>
             <p class="text-muted">Able an hope of body. Any nay shyness article matters own removal nothing his forming. Gay own additions education satisfied the perpetual. If he cause manor happy. Without farther she exposed saw man led. Along on happy could cease green oh. </p>
             <div class="social">
@@ -97,9 +97,47 @@
                 <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-vimeo"></i></a></li>
               </ul>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
   </div>
 </template>
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      form: {
+        name: '',
+        surname: '',
+        email: '',
+        message: ''
+      }
+    }
+  },
+  methods: {
+    async sendRequest () {
+      try {
+        let response = await axios.post('http://localhost:3000/contact', this.form)
+         this.$bvToast.toast('Solicitud enviada correctamente', {
+          title: `Hecho!`,
+          variant: 'success',
+          solid: true
+        })
+      } catch (error) {
+        this.$bvToast.toast('No se pudo  mandar la solicitud', {
+          title: `Error`,
+          variant: 'danger',
+          solid: true
+        })
+      } finally {
+        this.form.name = ''
+        this.form.email = ''
+        this.form.surname = ''
+        this.form.message = ''
+      }
+    }
+  },
+}
+</script>

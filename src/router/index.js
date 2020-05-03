@@ -35,20 +35,9 @@ const routes = [
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  
   ]},
-  { path: "*", component: () => import('@/views/public/Home') }
+  { path: "*", redirect: '/'}
 ];
-// console.log(store.getters.adminToken);
 
-// routes.beforeEach((to, from, next) => {
-//   if (to.matched.some(route => route.meta.requiresAuth)) {
-//     if ('') {
-//       next();
-//     } else {
-//       next({ name: 'admin' });
-//     }
-//   }
-//   next();
-// });
 
 const router = new VueRouter({
   mode: "history",
