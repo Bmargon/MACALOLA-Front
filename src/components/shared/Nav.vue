@@ -13,15 +13,14 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto" center>
-        <b-nav-item href="#">HOME</b-nav-item>
+        <b-nav-item :to="{name: 'home'}">HOME</b-nav-item>
         <b-nav-item href="#">OFERTAS</b-nav-item>
 
         <b-nav-item-dropdown text="PRODUCTOS" right>
           <b-dropdown-item v-for="(item, i) in categories" :key="i" @click="handleCategory(item)">{{item.name}}</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item href="#">CONTACTANOS</b-nav-item>
 
-
+        <b-nav-item :to="{name: 'contact'}" >CONTACTANOS</b-nav-item>
 
         <b-nav-item href="#">F.A.Q.</b-nav-item>
       </b-navbar-nav>
