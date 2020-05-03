@@ -104,6 +104,7 @@ p {
     &__title {
       text-align: center;
       margin-bottom: 3rem;
+      font-size: 2rem;
     }
     &__form{
       input:last-of-type {

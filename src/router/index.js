@@ -8,7 +8,7 @@ const routes = [
   // ==========================
   // PUBLIC ROUTES
   // =
-  { path: "/", name: "Home", component: () => import('@/views/public/Layout'), children: [
+  { path: "/", name: "", component: () => import('@/views/public/Layout'), children: [
     {path: '', name: 'home', component: () => import('@/views/public/Home')},
   ] },
   // ==========================

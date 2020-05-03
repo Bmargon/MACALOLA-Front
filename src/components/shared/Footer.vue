@@ -75,9 +75,13 @@
               <p class="mb-3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. At itaque temporibus.</p>
               <form action="#" id="newsletter-form">
                 <div class="input-group mb-3">
-                  <input type="email" placeholder="Your Email Address" aria-label="Your Email Address" class="form-control bg-transparent border-secondary border-right-0">
+                  <input  v-model="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" placeholder="Correo electrónico" aria-label="Your Email Address" class="form-control bg-transparent border-secondary border-right-0">
                   <div class="input-group-append">
-                    <button type="submit" class="btn btn-outline-secondary border-left-0"> <i class="fa fa-paper-plane text-lg text-dark"></i></button>
+                      <button @click.prevent="addToSubsList" class="btn btn-outline-secondary border-left-0"> 
+                        <b-overlay :show="show" rounded="sm">
+                          <i class="fa fa-paper-plane text-lg text-dark"></i>
+                        </b-overlay>
+                      </button>
                   </div>
                 </div>
               </form>
@@ -101,12 +105,40 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Footer',
+  data() {
+    return {
+      email: '',
+      show: false
+    }
+  },
   computed: {
     year () {
       return new Date().getFullYear()
     }
   },
+  methods: {
+    async addToSubsList () {
+      try {
+        this.show = true
+        await axios.post('http://localhost:3000/suscription', {'email': this.email})
+         this.$bvToast.toast('Desde ahora recibiras en tu email nuestras ofertas y promociones', {
+          title: `Hecho!`,
+          variant: 'success',
+          solid: true
+        })
+      } catch (error) {
+        this.$bvToast.toast('No se puedo añadir a la lista de suscripción', {
+          title: `Error`,
+          variant: 'danger',
+          solid: true
+        })
+      } finally {
+        this.show = false
+      }
+    }
+  }
 }
 </script>

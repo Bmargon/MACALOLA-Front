@@ -1,5 +1,4 @@
 <template lang="pug">
-  
   section
     article.topbar
       b-badge.mr-3(pill variant="success") Administrador

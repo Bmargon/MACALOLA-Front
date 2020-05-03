@@ -3,44 +3,64 @@
   <b-navbar toggleable="lg" type="light" class="bg-white" :sticky="true" variant="info">
     <b-navbar-brand>
       <router-link :to="{name: 'home'}">
-        <img src="https://res.cloudinary.com/macalola/image/upload/v1588232928/logo/logo_o2hsci.png" alt="">
+        <img class="ml-4" src="https://res.cloudinary.com/macalola/image/upload/v1588232928/logo/logo_o2hsci.png" alt="">
       </router-link>
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item href="#">Link</b-nav-item>
-        <b-nav-item href="#" disabled>Disabled</b-nav-item>
-      </b-navbar-nav>
 
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="mx-auto" center>
+        <b-nav-item href="#">HOME</b-nav-item>
+        <b-nav-item href="#">OFERTAS</b-nav-item>
 
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
+        <b-nav-item-dropdown text="PRODUCTOS" right>
+          <b-dropdown-item v-for="(item, i) in categories" :key="i">{{item.name}}</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item href="#">CONTACTANOS</b-nav-item>
 
-        <b-nav-item-dropdown right>
-          <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>
-            <em>User</em>
-          </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
+
+
+        <b-nav-item href="#">F.A.Q.</b-nav-item>
+      </b-navbar-nav>
+      <b-navbar-nav class="">
+
+
+      <span  style="font-size: 1.5em; color: #727272;">
+        <i class="fas fa-shopping-cart mr-4"></i>
+      </span>
+      <span style="font-size: 1.5em; color: #727272;">
+        <i class="fas fa-user mr-4"></i>
+      </span>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
 </template>
 
-<style lang="scss">
-  img{
-    width: 150px;
+<script>
+import {mapGetters, mapActions} from 'vuex'
+export default {
+  name: 'Nav',
+  computed: {
+    ...mapGetters(['categories'])
+  },
+  methods: {
+    ...mapActions(['getCategories'])
+  },
+  created() {
+    this.getCategories()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+img{
+  width: 150px;
+}
+span{
+  cursor: pointer;
 }
 </style>
