@@ -1,19 +1,19 @@
 <template lang="pug">
-  section
+  section.category
     b-row
       b-col
-        b-row.mb-3
-          h3 Categorias actuales
-          b-button(variant="link" @click="addCategory")
-            i(class="fas fa-plus")
-        b-row(v-if="createNew")
-          b-form-group(label="Nombre").mr-3
-            b-form-input( v-model="category.name" required)
-          b-form-group(label="Referencia")
-            b-form-input( v-model="category.referenceNumber" type="number" required)
-          b-button(variant="text" @click="postCategory") Añadir
+        b-form-group(label="Nombre").mr-3
+          b-form-input( v-model="category.name" required)
+      b-col
+        b-form-group(label="Referencia")
+          b-form-input( v-model="category.referenceNumber" type="number" required)
+      div.category__add
+        b-button(variant="primary" @click="postCategory") Añadir
+    b-row
+      b-col
         b-list-group
-          b-list-group-item(v-for="(item, i) in categories" :key="i") {{item.name}} {{item.referenceNumber}}
+          b-list-group-item(v-for="(item, i) in categories" :key="i") 
+            span {{item.name}} {{item.referenceNumber}}
             b-button(variant="link" @click="removeCategory(i)")
               i(class="fas fa-minus")
 </template>
@@ -26,7 +26,6 @@ export default {
   name: 'CategoryForm',
   data () {
     return {
-      createNew: false,
       category: {
         name: '',
         referenceNumber: ''
@@ -35,9 +34,6 @@ export default {
   },
   methods: {
   ...mapActions(['getCategories']),
-    addCategory() {
-      this.createNew = true
-    },
     // CREAR CATEGORIA
     async postCategory() {
      try {
@@ -86,3 +82,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.category {
+  &__add{
+    margin-top: 2rem;
+  }
+}
+</style>

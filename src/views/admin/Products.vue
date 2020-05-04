@@ -1,7 +1,5 @@
 <template lang="pug">
   section.products
-    h1 {{title}} 
-    hr
     b-nav(tabs)
       b-nav-item(@click="setForm('Productos')") Productos
       b-nav-item(@click="setForm('Crear Producto')") Crear Producto

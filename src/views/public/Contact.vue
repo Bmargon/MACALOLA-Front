@@ -85,7 +85,7 @@
               </div>
             </form>
           </div>
-          <!-- <div class="col-md-5">
+          <div class="col-md-5">
             <p class="text-muted">Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed. </p>
             <p class="text-muted">Able an hope of body. Any nay shyness article matters own removal nothing his forming. Gay own additions education satisfied the perpetual. If he cause manor happy. Without farther she exposed saw man led. Along on happy could cease green oh. </p>
             <div class="social">
@@ -97,7 +97,7 @@
                 <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-vimeo"></i></a></li>
               </ul>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </section>

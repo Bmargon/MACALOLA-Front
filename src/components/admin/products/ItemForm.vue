@@ -2,38 +2,44 @@
   section.form
 
     b-form(@submit.prevent="onSubmit")
-
-      b-form-group(label="Proveedor")
-        b-form-input(v-model="form.provider" required)
-  
-      b-form-group(label="Fecha de compra")
-        b-form-datepicker(v-model="form.buyDate" required)
     
-      b-form-group(label="Tempoarada")
-        b-form-input(v-model="form.season" required)
-
-      b-form-group(label="Nombre del producto")
-        b-form-input( v-model="form.name" required)
-
-      b-form-group( label="Precio de compra")
-        b-form-input( v-model="form.purchasePrice" type="number" required)
-
-      b-form-group( label="Precio de venta")
-        b-form-input(v-model="form.salePrice" type="number" required) {{ calculateDiscount }}
-
-      b-form-group( label="En promocion")
-        b-form-checkbox(
-          v-model="form.promotionOn" 
-          name="promotionOn")
-          
-      b-form-group( label="Porcentaje" v-if="form.promotionOn")
-        b-form-input(:disabled="!form.promotionOn" v-model="form.percentage" type="number" required)
-
-      b-form-group( v-if="form.promotionOn" label="Precio con porcentaje aplicado")
-        b-form-input(disabled v-model="form.priceWithDiscount" type="number")
-
-      b-form-group( label="Numero de referencia")
+      b-form-group( label="Número de referencia")
         b-form-input(required  v-model="form.referenceNumberCommon")
+      b-row
+        b-col
+          b-form-group(label="Proveedor")
+            b-form-input(v-model="form.provider" required)
+        b-col 
+          b-form-group(label="Fecha de compra")
+            b-form-datepicker(v-model="form.buyDate" required)
+        b-col
+          b-form-group(label="Tempoarada")
+            b-form-input(v-model="form.season" required)
+        b-col
+          b-form-group(label="Nombre del producto")
+            b-form-input( v-model="form.name" required)
+
+      b-row
+        b-col
+          b-form-group( label="Precio de compra")
+            b-form-input( v-model="form.purchasePrice" type="number" required)
+
+        b-col
+          b-form-group( label="Precio de venta")
+            b-form-input(v-model="form.salePrice" type="number" required) {{ calculateDiscount }}
+      b-row
+        b-col
+          b-form-group( label="En promocion")
+            b-form-checkbox(
+              v-model="form.promotionOn" 
+              name="promotionOn")
+        b-col
+          b-form-group( label="Porcentaje" v-if="form.promotionOn")
+            b-form-input(:disabled="!form.promotionOn" v-model="form.percentage" type="number" required)
+        b-col
+          b-form-group( v-if="form.promotionOn" label="Precio con porcentaje aplicado")
+            b-form-input(disabled v-model="form.priceWithDiscount" type="number")
+
   
       b-form-group( label="Descripcion")
         b-form-textarea(v-model="form.description")
@@ -41,14 +47,15 @@
       b-form-group( label="Categoria")
         b-form-select(v-model="form.category")
           b-form-select-option( v-for="category in categories" :key="category.name" :value="category._id") {{category.name}}
-
-      b-form-group( label="Accesorio")
-        b-form-checkbox(
-          name="Accesorio"
-          v-model="form.accesory")
-  
-      b-form-group( v-if="form.accesory" label="Total accesorios")
-        b-form-input(v-model="form.totalStock" type="number")
+      b-row
+        b-col
+          b-form-group( label="Accesorio")
+            b-form-checkbox(
+              name="Accesorio"
+              v-model="form.accesory")
+        b-col
+          b-form-group( v-if="form.accesory" label="Total accesorios")
+            b-form-input(v-model="form.totalStock" type="number")
   
       .form__stock(v-if="!form.accesory")
         b-form-group( label="Stock")

@@ -1,7 +1,6 @@
 <template lang="pug">
   section
-    h1 Pedidos 
-    hr
+
 </template>
 <script>
   export default {}

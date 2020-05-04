@@ -1,7 +1,6 @@
 <template lang="pug">
   section.main
-    h1 Panel de administración Macalola
-    hr
+
     div.main__links
       b-card( 
         v-for="(item, i ) in quickAccess"
@@ -35,6 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .card{
   margin-right: 2rem;
 }
