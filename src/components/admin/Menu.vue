@@ -41,6 +41,9 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
+      position: sticky;
+    left: 0px;
+    top: 0px;
   height: 100%;
   &__img {
     text-align: center;

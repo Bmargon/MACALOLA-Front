@@ -6,13 +6,14 @@ b-overlay(:show="loading" opacity="0.6" rouded)
         b-button.mr-3(variant="success" :disabled="disabledFields" @click="saveItem" ) Guardar
         b-button.mr-3(variant="secondary" @click="editItem") Editar
         b-button(variant="danger" @click="removeItem") Eliminar
-
+        
     b-row.product__row
       b-col(cols="4")
-        div.product__img
-          img(:src="product.img", alt="alt")
-
-      b-col(cols="8")
+          div.product__img.mb-5
+            img(:src="product.img", alt="alt")
+          b-form-group( )
+            b-form-file( :disabled="disabledFields" v-model="form.img" type="file" accept="image/jpeg, image/png")
+      b-col(cols="7")
         b-form
           b-row
             b-col
@@ -65,11 +66,13 @@ b-overlay(:show="loading" opacity="0.6" rouded)
               b-form-group(disabled label="Precio con porcentaje")
                 b-form-input(:placeholder="checkPromotion" type="number")
 
-          b-row()
-            b-form-group(:disabled="disabledFields" label="Accesorio").mr-5
-              b-form-checkbox(v-model="form.accesory")
-            b-form-group( v-if="form.accesory" label="Cantidad accesorio")
-              b-form-input( v-model="form.totalStock" type="number")
+          b-row
+            b-col
+              b-form-group(:disabled="disabledFields" label="Accesorio").mr-5
+                b-form-checkbox(v-model="form.accesory")
+            b-col
+              b-form-group( v-if="form.accesory" label="Cantidad accesorio")
+                b-form-input( v-model="form.totalStock" type="number")
 
           b-row(v-if="!form.accesory")
            b-form-group( label="Stock")
@@ -110,10 +113,6 @@ b-overlay(:show="loading" opacity="0.6" rouded)
                     i(class="fas fa-plus")
                   b-button(:disabled="disabledFields" variant="link" @click="removeQuantity(index)")
                     i(class="fas fa-minus")
-
-          b-row
-            b-form-group( label="Imagen")
-              b-form-file( :disabled="disabledFields" v-model="form.img" type="file" accept="image/jpeg, image/png")
 </template>
 <script>
 import axios from 'axios'
@@ -296,6 +295,9 @@ export default {
       justify-content: flex-end;
     }
     &__row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       padding: 2rem;
     }
     &__img {
