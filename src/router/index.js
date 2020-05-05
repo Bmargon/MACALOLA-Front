@@ -31,6 +31,7 @@ const routes = [
       {path: 'product/:ref', name: 'product', component: () => import('@/views/admin/GetSingleProduct')},
       {path: 'users', name: 'users', component: () => import('@/views/admin/Users')},
       {path: 'returns', name: 'returns', component: () => import('@/views/admin/Returns')},
+      {path: 'template', name: 'template', component: () => import('@/views/admin/Template')},
     ]}
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  

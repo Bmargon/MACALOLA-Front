@@ -20,6 +20,9 @@
           li(:class="[currentPath.includes('users') ? 'router-link-active' : '']")
             i(class="fas fa-user")
             router-link(:to="{name: 'users'}") Usuarios
+          li(:class="[currentPath.includes('template') ? 'router-link-active' : '']")
+            i(class="fas fa-pager")
+            router-link(:to="{name: 'template'}") Template
 
 </template>
 
@@ -41,14 +44,13 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-      position: sticky;
-    left: 0px;
-    top: 0px;
+  
   height: 100%;
   &__img {
     text-align: center;
   }
 }
+
 .router-link-active {
   background-color: $-color-admin;
   color: $-white; 
@@ -71,6 +73,9 @@ a{
   list-style: none;
   font-size: 1.4rem;
   text-decoration: none;
+  &:hover{
+    text-decoration: none;
+  }
 }
 ul {
   padding: 0;
@@ -78,6 +83,10 @@ ul {
   flex-direction: column;
 }
 li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
   padding: 1rem 0 1rem 1.5rem;
   background-color: $-white;
   color: $-black; 
