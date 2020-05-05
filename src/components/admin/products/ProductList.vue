@@ -60,7 +60,6 @@ export default{
     ...mapActions(['getAllProducts']),
     changePage (value) {
       this.currentPage = 20 * (value - 1)
-      console.log(value);
     },
     rowClass(item, type) {
       if (!item || type !== 'row') return

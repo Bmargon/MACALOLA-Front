@@ -13,7 +13,7 @@ const mutations = {
 }
 const actions = {
   async getCategories({commit}) {
-    const categories = await axios.get('https://www.macalola.com/category')
+    const categories = await axios.get(`${process.env.VUE_APP_URL}/category`)
     commit('SETCATEGORIES', categories)
   }
 }

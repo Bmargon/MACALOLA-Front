@@ -51,10 +51,9 @@ export default {
         const formdata = new FormData()
         formdata.append("email", this.formFields.email)
         formdata.append("password", this.formFields.password)
-        let userResponse = await axios.post('https://www.macalola.com/login-admin', this.formFields)
+        let userResponse = await axios.post(`${process.env.VUE_APP_URL}/login-admin`, this.formFields)
         sessionStorage.setItem('adminToken', userResponse.data.token)
         this.$router.push({name: 'adminhome'})
-        console.log(userResponse);
       } catch (error) {
         this.$bvToast.toast('Usuario incorrecto', {
           title: ``,

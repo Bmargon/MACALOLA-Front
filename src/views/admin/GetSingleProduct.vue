@@ -184,7 +184,7 @@ export default {
     async removeItem () {
       try {
         this.loading = true
-        await axios.delete(`https://www.macalola.com/product/${this.form.referenceNumberCommon}`, {
+        await axios.delete(`${process.env.VUE_APP_URL}/product/${this.form.referenceNumberCommon}`, {
           headers: {
             'authorization': sessionStorage.getItem('adminToken'),
           }
@@ -228,7 +228,7 @@ export default {
         formData.append('category', this.form.category)
         formData.append('img', this.form.img)
 
-        await axios.put(`https://www.macalola.com/product/${this.form.referenceNumberCommon}`, formData, {
+        await axios.put(`${process.env.VUE_APP_URL}/product/${this.form.referenceNumberCommon}`, formData, {
           headers: {
             'content-type': 'multipart/form-data',
             'authorization': sessionStorage.getItem('adminToken'),

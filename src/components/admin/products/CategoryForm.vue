@@ -38,7 +38,7 @@ export default {
     async postCategory() {
      try {
        let token = sessionStorage.getItem('adminToken')
-        await axios.post('https://www.macalola.com/category', this.category, {
+        await axios.post(`${process.env.VUE_APP_URL}/category`, this.category, {
         headers: {
           'authorization': token,
         }
@@ -59,7 +59,7 @@ export default {
       try {
         let token = sessionStorage.getItem('adminToken')
         let id = this.categories[index]._id
-        await axios.delete(`https://www.macalola.com/category/${id}`, {
+        await axios.delete(`${process.env.VUE_APP_URL}/category/${id}`, {
           headers: {
             'authorization': token,
           }
