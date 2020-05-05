@@ -13,7 +13,7 @@ const mutations = {
 }
 const actions = {
   async getCategories({commit}) {
-    const categories = await axios.get('http://localhost:3000/category')
+    const categories = await axios.get('https://www.macalola.com/category')
     commit('SETCATEGORIES', categories)
   }
 }

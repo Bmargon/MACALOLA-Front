@@ -18,7 +18,7 @@ const mutations = {
 }
 const actions = {
   async getAllProducts({commit}) {
-    const products = await axios.get('http://localhost:3000/product', {
+    const products = await axios.get('https://www.macalola.com/product', {
       headers: {
         'authorization': sessionStorage.getItem('adminToken'),
       }
@@ -26,7 +26,7 @@ const actions = {
     commit('SETALLPRODUCTS', products)
   },
   async getSingleProduct({commit}, ref) {
-    const product = await axios.get(`http://localhost:3000/product/${ref}`, {
+    const product = await axios.get(`https://www.macalola.com/product/${ref}`, {
       headers: {
         'authorization': sessionStorage.getItem('adminToken'),
       }

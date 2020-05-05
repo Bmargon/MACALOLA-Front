@@ -177,7 +177,7 @@ export default {
 
       try {
         this.loading = true
-        await axios.post('http://localhost:3000/product', formData, {
+        await axios.post('https://www.macalola.com/product', formData, {
           headers: {
             'content-type': 'multipart/form-data',
             'authorization': sessionStorage.getItem('adminToken'),
