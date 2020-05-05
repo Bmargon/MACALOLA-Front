@@ -119,7 +119,7 @@ export default {
   methods: {
     async sendRequest () {
       try {
-        let response = await axios.post('http://localhost:3000/contact', this.form)
+        let response = await axios.post(`${process.env.VUE_APP_URL}/contact`, this.form)
          this.$bvToast.toast('Solicitud enviada correctamente', {
           title: `Hecho!`,
           variant: 'success',

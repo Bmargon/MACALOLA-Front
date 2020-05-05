@@ -123,7 +123,7 @@ export default {
     async addToSubsList () {
       try {
         this.show = true
-        await axios.post('http://localhost:3000/suscription', {'email': this.email})
+        await axios.post(`${process.env.VUE_APP_URL}/suscription`, {'email': this.email})
          this.$bvToast.toast('Desde ahora recibiras en tu email nuestras ofertas y promociones', {
           title: `Hecho!`,
           variant: 'success',
