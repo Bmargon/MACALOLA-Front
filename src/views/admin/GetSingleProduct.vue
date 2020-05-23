@@ -302,7 +302,7 @@ export default {
     }
     &__img {
       img {
-        width: 450px;
+        max-width: 450px;
       }
     }
   }
