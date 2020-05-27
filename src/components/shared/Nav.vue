@@ -14,7 +14,7 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto" center>
         <b-nav-item :to="{name: 'home'}">HOME</b-nav-item>
-        <b-nav-item href="#">OFERTAS</b-nav-item>
+        <b-nav-item :to="{path: '/ofertas'}">OFERTAS</b-nav-item>
 
         <b-nav-item-dropdown text="PRODUCTOS" right>
           <b-dropdown-item v-for="(item, i) in categories" :key="i" @click="handleCategory(item)">{{item.name}}</b-dropdown-item>
@@ -41,6 +41,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import EventBus from '@/utils/EventBus'
 export default {
   name: 'Nav',
   computed: {
@@ -49,8 +50,15 @@ export default {
   methods: {
     ...mapActions(['getCategories']),
     handleCategory(item) {
-      if (this.$route.params.cat === item.name.toLowerCase()) return
-      this.$router.push({path: item.name.toLowerCase() })
+      let path = '/' + item.name.toLowerCase()
+      if (this.$route.params.ref ) {
+        this.$router.push({path})
+      }
+      if (this.$route.params.cat === item.name.toLowerCase()) {
+        return
+      }
+      this.$router.push({path })
+      EventBus.$emit('refresh' )
     }
   },
   created() {
