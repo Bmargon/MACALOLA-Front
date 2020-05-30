@@ -10,7 +10,7 @@ const routes = [
   // =
   { path: "/", name: "", component: () => import('@/views/public/Layout'), children: [
     {path: '', name: 'home', component: () => import('@/views/public/Home')},
-    {path: ':cat', name: 'category', component: () => import('@/views/public/Category')},
+    {path: '/c/:cat', name: 'category', component: () => import('@/views/public/Category')},
     {path: '/i/:cat/:ref', name: 'product', component: () => import('@/views/public/Product')},
     {path: 'contact', name: 'contact', component: () => import('@/views/public/Contact')},
   ] },

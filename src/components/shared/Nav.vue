@@ -14,7 +14,7 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto" center>
         <b-nav-item :to="{name: 'home'}">HOME</b-nav-item>
-        <b-nav-item :to="{path: '/ofertas'}">OFERTAS</b-nav-item>
+        <b-nav-item :to="{path: '/c/ofertas'}">OFERTAS</b-nav-item>
 
         <b-nav-item-dropdown text="PRODUCTOS" right>
           <b-dropdown-item v-for="(item, i) in categories" :key="i" @click="handleCategory(item)">{{item.name}}</b-dropdown-item>
@@ -27,12 +27,27 @@
       <b-navbar-nav class="">
 
 
-      <span  style="font-size: 1.5em; color: #727272;">
-        <i class="fas fa-shopping-cart mr-4"></i>
-      </span>
+   
       <span style="font-size: 1.5em; color: #727272;">
         <i class="fas fa-user mr-4"></i>
       </span>
+
+
+      <div class="nav-item dropdown">
+        <span  style="font-size: 1.5em; color: #727272;">
+          <i class="fas fa-shopping-cart mr-4">
+            <use xlink:href="#cart-1"> </use>
+          </i>
+        </span>
+        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline d-lg-none">View cart</span>
+          <div class="d-none d-lg-block">
+            <a id="cartdetails" href="cart.html" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-icon-link dropdown-toggle">
+              <svg class="svg-icon">
+                <use xlink:href="#cart-1"> </use>
+              </svg>
+              <div v-if="getTotalItems > 0" class="navbar-icon-link-badge">{{getTotalItems}}</div></a>
+          </div>            
+        </div>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -45,12 +60,17 @@ import EventBus from '@/utils/EventBus'
 export default {
   name: 'Nav',
   computed: {
-    ...mapGetters(['categories'])
+    ...mapGetters(['categories', 'getTotalItems'])
+  },
+  data() {
+    return {
+      showCart: false
+    }
   },
   methods: {
     ...mapActions(['getCategories']),
     handleCategory(item) {
-      let path = '/' + item.name.toLowerCase()
+      let path = '/c/' + item.name.toLowerCase()
       if (this.$route.params.ref ) {
         this.$router.push({path})
       }

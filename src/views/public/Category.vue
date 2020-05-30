@@ -1,11 +1,13 @@
 <template >
   <section>
     <hero-category/>
-    <product-category
-      v-for="(item, index) in products"
-      :key="index"
-      :content="item"
-    />
+    <div class="product">
+      <product-category
+        v-for="(item, index) in products"
+        :key="index"
+        :content="item"
+      />
+    </div>
   </section>
 </template>
 <script>
@@ -28,7 +30,10 @@ export default {
   methods: {
     async getProducts (cat) {
       try {
-        if (this.$route.params.cat === 'offers') {
+        if (this.$route.params.cat === 'ofertas') {
+        let url = process.env.VUE_APP_URL + '/offers'
+          let response = await axios.get(url)
+          this.products = response.data.productDB
 
         } else {
           let url = process.env.VUE_APP_URL + '/bycategory/' + this.$route.params.cat
@@ -48,4 +53,10 @@ export default {
   }
 }
 </script>
-content
+
+<style lang="scss" scoped>
+.product{
+  display: flex;
+  width: 1000px;
+}  
+</style>

@@ -6,6 +6,7 @@
 <script>
 export default {
   created () {
+    // OBTENER JSON GENERICO DEL SERVIDOR
     console.log(process.env.VUE_APP_URL)
   }
 }

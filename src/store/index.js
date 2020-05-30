@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import Category from './modules/category'
 import Product from './modules/product'
 import Login from './modules/login'
+import Cart from './modules/cart'
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     Category,
     Login,
-    Product
+    Product,
+    Cart
   }
 });

@@ -14,7 +14,7 @@
                   <router-link :to="{path: '/'}">Home</router-link>
                 </li>
                 <li class="breadcrumb-item">
-                  <router-link :to="{path: '/' + $route.params.cat}">
+                  <router-link :to="{path: '/c/' + $route.params.cat}">
                     {{getCategory}}
                   </router-link>
                 </li>
@@ -28,52 +28,44 @@
                     <del> {{priceWithOutDiscount}}</del>
                   </li>
                 </ul>
-
               </div>
               <p class="mb-4 text-muted"> {{product.description}}</p>
-              <form action="#">
-                <div class="row">
-                  <div class="col-sm-6 col-lg-12 detail-option mb-3">
-                    <h6 class="detail-option-heading">Talla <span>*</span></h6>
-                    <div  v-for="(quantity, i) in product.stock" :key="i"></div>
-                    <label for="size_0" class="btn btn-sm btn-outline-secondary detail-option-btn-label">
-                       
-                      Small
-                      <input type="radio" name="size" value="value_0" id="size_0" required class="input-invisible">
-                    </label>
-                  </div>
-                  
-                  <div class="col-12 detail-option mb-3" v-if="product.accesory">
+              <form>
+                <!-- COLOR -->
+                <div class="row" >
+                  <div class="col-12 detail-option mb-3" v-if="!product.accesory">
                     <h6 class="detail-option-heading">Color<span>*</span></h6>
                     <ul class="list-inline mb-0 colours-wrapper">
-                      <li class="list-inline-item">
-                        <label for="colour_Blue" style="background-color: #668cb9" class="btn-colour"> </label>
-                        <input type="radio" name="colour" value="value_Blue" id="colour_Blue" required class="input-invisible">
-                      </li>
-                      <li class="list-inline-item">
-                        <label for="colour_White" style="background-color: #fff" class="btn-colour"> </label>
-                        <input type="radio" name="colour" value="value_White" id="colour_White" required class="input-invisible">
-                      </li>
-                      <li class="list-inline-item">
-                        <label for="colour_Violet" style="background-color: #8b6ea4" class="btn-colour"> </label>
-                        <input type="radio" name="colour" value="value_Violet" id="colour_Violet" required class="input-invisible">
-                      </li>
-                      <li class="list-inline-item">
-                        <label for="colour_Red" style="background-color: #dd6265" class="btn-colour"> </label>
-                        <input type="radio" name="colour" value="value_Red" id="colour_Red" required class="input-invisible">
+                      <li class="list-inline-item" v-for="(item, i) in getColor" :key="i">
+                        <label :for="item.ref" :class="{'active': newOrderItem.refNumber === item.ref}" class="btn btn-sm btn-outline-secondary detail-option-btn-label" >{{item.color}}
+                          <input :id="item.ref" v-model="newOrderItem.refNumber" type="radio" name="size" :value="item.ref" required class="input-invisible">
+                        </label>
                       </li>
                     </ul>
                   </div>
+                  <!-- TALLA -->
+                  <div class="col-sm-6 col-lg-12 detail-option mb-3" v-if="!this.product.accesory">
+                    <h6 class="detail-option-heading">Talla <span>*</span></h6>
+                      <ul class="list-inline mb-0 colours-wrapper">
+                        <li class="list-inline-item" v-for="(item, i) in getSizes" :key="i">
+                          <label :class="{'active': newOrderItem.size === item}" :for="item" class="btn btn-sm btn-outline-secondary detail-option-btn-label">{{item}}
+                            <input :id="item" v-model="newOrderItem.size" type="radio" name="size" :value="item" required class="input-invisible">
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  
                   <div class="col-12 col-lg-6 detail-option mb-5">
-                    <label class="detail-option-heading font-weight-bold">Items <span>(required)</span></label>
-                    <input name="items" type="number" value="1" class="form-control detail-quantity">
+                    <label class="detail-option-heading font-weight-bold">Cantidad
+                      <span>*</span>
+                    </label>
+                    <input v-model="newOrderItem.quantity" name="cantidad" type="number" class="form-control detail-quantity">
                   </div>
                 </div>
                 <ul class="list-inline">
                   <li class="list-inline-item">
-                    <button type="submit" class="btn btn-dark btn-lg mb-1"> <i class="fa fa-shopping-cart mr-2"></i>Add to Cart</button>
+                    <button @click.prevent="addItem" class="btn btn-dark btn-lg mb-1"> <i class="fa fa-shopping-cart mr-2"></i>Añadir al carrito</button>
                   </li>
-                  <li class="list-inline-item"><a href="#" class="btn btn-outline-secondary mb-1"> <i class="far fa-heart mr-2"></i>Add to wishlist</a></li>
                 </ul>
               </form>
             </div>
@@ -82,13 +74,23 @@
       </div>
     </section>
 </template>
+
 <script>
 import axios from 'axios'
+import {mapActions} from 'vuex'
+
 export default {
   name: 'ProductDetail',
   data() {
     return {
-      product: {}
+      product: {},
+      newOrderItem: {
+        referenceNumberCommon: '',
+        refNumber: '',
+        size: '',
+        price: '',
+        quantity: 1
+      }
     }
   },
   computed: {
@@ -101,15 +103,56 @@ export default {
     getCategory () {
       let route = this.$route.params.cat
       return route.charAt(0).toUpperCase() + route.slice(1);
+    },
+    getColor () {
+      if (this.product.accesory) return
+      let colors = []
+      if (this.product.stock === undefined) return
+      this.product.stock.forEach(item => {
+        colors.push({
+          ref: item.ref,
+          color: item.color
+        })
+      })
+      return colors
+    },
+    getSizes () {
+      if (this.product.accesory) return
+      if (this.product.stock === undefined) return
+      let sizes = []
+      this.product.stock.forEach(element => {
+        element.quantity.forEach(size => {
+          if (!size.units <= 0 && !sizes.includes(size.size)){
+            sizes.push(size.size)
+          }
+        })
+      })
+      return sizes
+    }
+  },
+  watch: {
+   'newOrderItem.quantity' (value) {
+      if (value <= 0) {
+        this.newOrderItem.quantity = 1
+      }
     }
   },
   methods: {
+    ...mapActions(['addToCart']),
     async getProduct() {
       let url = process.env.VUE_APP_URL  + '/product/' + this.$route.params.ref
       let response = await axios.get(url)
       this.product = response.data.productDB[0]
-      console.log(response);
-    }
+    },
+    addItem () {
+      this.newOrderItem.referenceNumberCommon = this.product.referenceNumberCommon
+      this.newOrderItem.price = this.product.salePrice * this.newOrderItem.quantity
+      this.addToCart(this.newOrderItem)
+      // this.newOrderItem.referenceNumberCommon = ''
+      // this.newOrderItem.quantity = 1
+      // this.newOrderItem.size = ''
+      // this.newOrderItem.refNumber = ''
+    },
   },
   created() {
     this.getProduct()
@@ -119,8 +162,6 @@ export default {
 <style lang="scss" scoped>
 .detail-full-item {
     background: center center;
-     background-size: cover;
-    ;
-  
+    background-size: cover;
 }
 </style>
