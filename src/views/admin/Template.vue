@@ -49,7 +49,7 @@ section.template
     article.mb-5
       b-row
         b-col
-          b-card(title="Template")
+          b-card(title="Grid")
             b-form-group(v-for="(item, i) in config.template" :key="i")
               b-form-input(:disabled="disabled" placeholder="Titulo" v-model="item.title").mb-1
               b-form-input(:disabled="disabled" placeholder="Imágen" v-model="item.img").mb-1
@@ -88,6 +88,7 @@ export default {
           {title: '', subtitle: '', img: '', button: ''}
         ],
         template: [
+          {title: '', img: '',button: ''},
           {title: '', img: '',button: ''},
           {title: '', img: '',button: ''},
           {title: '', img: '',button: ''},

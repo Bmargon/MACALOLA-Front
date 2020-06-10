@@ -13,6 +13,7 @@ const routes = [
     {path: '/c/:cat', name: 'category', component: () => import('@/views/public/Category')},
     {path: '/i/:cat/:ref', name: 'productPublic', component: () => import('@/views/public/Product')},
     {path: 'contact', name: 'contact', component: () => import('@/views/public/Contact')},
+    {path: 'cart', name: 'cart', component: () => import('@/views/public/Cart')},
   ] },
   // ==========================
   // PRIVATE ROUTES

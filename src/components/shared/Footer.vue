@@ -6,30 +6,30 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-4 service-column">
-              <svg class="svg-icon service-icon">
-                <use xlink:href="#delivery-time-1"> </use>
-              </svg>
+              <span class="mr-3" style="font-size: 2em; color: #727272;">
+                <i class="fas fa-shipping-fast"></i>
+              </span>       
               <div class="service-text">
-                <h6 class="text-uppercase">Free shipping &amp; return</h6>
-                <p class="text-muted font-weight-light text-sm mb-0">Free Shipping over $300</p>
+                <h6 class="text-uppercase">Envío gratis</h6>
+                <p class="text-muted font-weight-light text-sm mb-0">a partir de {{getGlobalConfig.sendPrice}} €</p>
               </div>
             </div>
             <div class="col-lg-4 service-column">
-              <svg class="svg-icon service-icon">
-                <use xlink:href="#money-1"> </use>
-              </svg>
+              <span class="mr-3" style="font-size: 1.9em; color: #727272;">
+                <i class="fas fa-money-check-alt"></i>
+              </span>
               <div class="service-text">
-                <h6 class="text-uppercase">Money back guarantee</h6>
-                <p class="text-muted font-weight-light text-sm mb-0">30 Days Money Back Guarantee</p>
+                <h6 class="text-uppercase">Garantía de devolución</h6>
+                <p class="text-muted font-weight-light text-sm mb-0">Hasta {{getGlobalConfig.moneyBack}} para devolver los productos</p>
               </div>
             </div>
             <div class="col-lg-4 service-column">
-              <svg class="svg-icon service-icon">
-                <use xlink:href="#customer-support-1"> </use>
-              </svg>
+              <span class="mr-3" style="font-size: 2.2em; color: #727272;">
+                <i class="fas fa-concierge-bell"></i>
+              </span>
               <div class="service-text">
-                <h6 class="text-uppercase">020-800-456-747</h6>
-                <p class="text-muted font-weight-light text-sm mb-0">24/7 Available Support</p>
+                <h6 class="text-uppercase">{{getGlobalConfig.emailOnDisplay}}</h6>
+                <p class="text-muted font-weight-light text-sm mb-0">24/7 Atención al cliente</p>
               </div>
             </div>
           </div>
@@ -41,7 +41,6 @@
           <div class="row">
             <div class="col-lg-4 mb-5 mb-lg-0">
               <div class="font-weight-bold text-uppercase text-lg text-dark mb-3">Macalola<span class="text-primary">.</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
               <ul class="list-inline">
                 <li class="list-inline-item"><a href="#" target="_blank" title="twitter" class="text-muted text-hover-primary"><i class="fab fa-twitter"></i></a></li>
                 <li class="list-inline-item"><a href="#" target="_blank" title="facebook" class="text-muted text-hover-primary"><i class="fab fa-facebook"></i></a></li>
@@ -106,6 +105,7 @@
 
 <script>
 import axios from 'axios'
+import {mapGetters} from 'vuex'
 export default {
   name: 'Footer',
   data() {
@@ -115,6 +115,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getGlobalConfig']),
     year () {
       return new Date().getFullYear()
     }
@@ -143,3 +144,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+
+</style>

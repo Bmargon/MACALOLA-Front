@@ -1,22 +1,22 @@
 <template>
-<div>
+<div class="grid mt-3">
     <section>
       <div class="container-fluid px-5px">
         <div class="row mx-0">
           <div class="col-md-6 mb-10px px-5px">
-            <div class="card border-0 text-white text-center"><img src="img/photo/christopher-campbell-28571-unsplash.jpg" alt="Card image" class="card-img">
+            <div class="card border-0 text-white text-center"><img :src="parseGrid[0].img" alt="Card image" class="card-img">
               <div class="card-img-overlay d-flex align-items-center"> 
                 <div class="w-100 py-3">
-                  <h2 class="display-3 font-weight-bold mb-4">Top picks</h2><a href="category.html" class="btn btn-light">Shop now</a>
+                  <h2 class="display-3 font-weight-bold mb-4">{{parseGrid[0].title}}</h2><router-link  class="btn btn-light" :to="{path: '/c/' + parseGrid[0].button}">Ver ahora</router-link>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-6 mb-10px px-5px">
-            <div class="card border-0 text-white text-center"><img src="img/photo/marco-xu-496929-unsplash.jpg" alt="Card image" class="card-img">
+            <div class="card border-0 text-white text-center"><img :src="parseGrid[1].img" alt="Card image" class="card-img">
               <div class="card-img-overlay d-flex align-items-center"> 
                 <div class="w-100 py-3">
-                  <h2 class="display-3 font-weight-bold mb-4">New arrivals</h2><a href="category.html" class="btn btn-light">Shop now</a>
+                  <h2 class="display-3 font-weight-bold mb-4">{{parseGrid[1].title}}</h2><router-link  class="btn btn-light" :to="{path: '/c/' + parseGrid[0].button}">Ver ahora</router-link>
                 </div>
               </div>
             </div>
@@ -24,28 +24,28 @@
         </div>
         <div class="row mx-0">
           <div class="col-lg-4 mb-10px px-5px">
-            <div class="card border-0 text-center text-white"><img src="img/photo/benjamin-voros-260869-unsplash.jpg" alt="Card image" class="card-img">
+            <div class="card border-0 text-center text-white"><img :src="parseGrid[2].img" alt="Card image" class="card-img">
               <div class="card-img-overlay d-flex align-items-center"> 
                 <div class="w-100">
-                  <h2 class="display-4 mb-4">Jackets</h2><a href="category.html" class="btn btn-link text-white">Shop now <i class="fa-arrow-right fa ml-2"></i></a>
+                  <h2 class="display-4 mb-4">{{parseGrid[2].title}}</h2><router-link :to="{path: '/p/' + parseGrid[0].button}" class="btn btn-link text-white"> Ver ahora <i class="fa-arrow-right fa ml-2"></i></router-link>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-lg-4 mb-10px px-5px">
-            <div class="card border-0 text-center text-white"><img src="img/photo/malvestida-magazine-458585-unsplash.jpg" alt="Card image" class="card-img">
+            <div class="card border-0 text-center text-white"><img :src="parseGrid[3].img" alt="Card image" class="card-img">
               <div class="card-img-overlay d-flex align-items-center"> 
                 <div class="w-100">
-                  <h2 class="display-4 mb-4">Lookbook</h2><a href="category.html" class="btn btn-link text-white">Shop now <i class="fa-arrow-right fa ml-2"></i></a>
+                  <h2 class="display-4 mb-4">{{parseGrid[3].title}}</h2><router-link class="btn btn-link text-white" :to="{path: '/p/' + parseGrid[0].button}"> Ver ahora <i class="fa-arrow-right fa ml-2"></i></router-link>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-lg-4 mb-10px px-5px">
-            <div class="card border-0 text-center text-dark"><img src="img/photo/michael-frattaroli-221247-unsplash.jpg" alt="Card image" class="card-img">
+            <div class="card border-0 text-center text-white"><img :src="parseGrid[4].img" alt="Card image" class="card-img">
               <div class="card-img-overlay d-flex align-items-center"> 
                 <div class="w-100">
-                  <h2 class="display-4 mb-4">Try this</h2><a href="category.html" class="btn btn-link text-dark">Shop now <i class="fa-arrow-right fa ml-2"></i></a>
+                  <h2 class="display-4 mb-4">{{parseGrid[4].title}}</h2><router-link :to="{path: '/p/' + parseGrid[0].button}" class="btn btn-link text-white">Ver ahora <i class="fa-arrow-right fa ml-2"></i></router-link>
                 </div>
               </div>
             </div>
@@ -56,7 +56,20 @@
 </div>
 </template>
 <script>
-  export default {
-    name: 'HomeGrid'
+import {mapGetters} from 'vuex'
+
+export default {
+  name: 'HomeGrid',
+    computed: {
+    ...mapGetters(['getGlobalConfig']),
+     parseGrid() {
+        return JSON.parse(this.getGlobalConfig.template)
+      }
   }
+}
 </script>
+<style lang="scss" scoped>
+  .grid{
+    height: 100%;
+  }
+</style>

@@ -17,7 +17,7 @@
         :key="i"
         :img-src="item.img"
       >     
-      <div class="item home-full-item"><img src="img/photo/matheus-ferrero-334418-unsplash.jpg" alt="" class="bg-image">
+      <div class="item home-full-item">
         <div class="container-fluid h-100 py-5">
          <h5 class="text-uppercase text-white font-weight-light mb-4 letter-spacing-5"> {{item.subtitle}}</h5>
           <h1 class="mb-5 display-2 font-weight-bold text-serif">{{item.title}}</h1>
@@ -66,10 +66,16 @@ import {mapGetters} from 'vuex'
 </script>
 <style lang="scss">
 .carousel-inner{
-  height: 600px;
-
+  height: 700px;
+  @media screen and (max-width: 600px) {
+    height: 230px;
+  }
 } 
 .carousel-caption{
-    top: 15%;
+  top: 20%;
+  @media screen and (max-width: 600px) {
+    
+  top: -45px;
+  }
 }
 </style>

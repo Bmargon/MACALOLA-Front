@@ -1,7 +1,7 @@
 <template>
-  <section class="home">
+  <section>
     <home-carrousel/>
-    <!-- <home-grid/> -->
+    <home-grid/>
   </section>
 </template>
 

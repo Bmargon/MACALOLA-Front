@@ -26,27 +26,26 @@
       </b-navbar-nav>
       <b-navbar-nav class="">
 
+        
+        <div class="user-actions">
+            <div class="nav-item">
+                <span style="font-size: 1.5em; color: #727272;">
+                  <router-link :to="{name: 'cart'}">
+                    <i class="fas fa-user mr-4"></i>
+                  </router-link>
+                </span>
 
-   
-      <span style="font-size: 1.5em; color: #727272;">
-        <i class="fas fa-user mr-4"></i>
-      </span>
+              </div>
 
 
-      <div class="nav-item dropdown">
-        <span  style="font-size: 1.5em; color: #727272;">
-          <i class="fas fa-shopping-cart mr-4">
-            <use xlink:href="#cart-1"> </use>
-          </i>
-        </span>
-        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline d-lg-none">View cart</span>
-          <div class="d-none d-lg-block">
-            <a id="cartdetails" href="cart.html" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-icon-link dropdown-toggle">
-              <svg class="svg-icon">
-                <use xlink:href="#cart-1"> </use>
-              </svg>
-              <div v-if="getTotalItems > 0" class="navbar-icon-link-badge">{{getTotalItems}}</div></a>
-          </div>            
+              <div class="nav-item ">
+                <span  style="font-size: 1.5em; color: #727272;">
+                  <router-link :to="{name: 'cart'}">
+                    <i class="fas fa-shopping-cart mr-4"></i>
+                  </router-link>
+                </span>
+                  
+              </div>
         </div>
       </b-navbar-nav>
     </b-collapse>
@@ -91,7 +90,22 @@ export default {
 img{
   width: 150px;
 }
-span{
-  cursor: pointer;
+.nav-link{
+  margin: 0 1rem;
+  @media screen and (max-width: 600px) {
+    margin: 0;
+  }
 }
+.user-actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 600px) {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 1rem;
+  }
+
+}
+
 </style>
