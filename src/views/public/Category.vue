@@ -57,6 +57,14 @@ export default {
 <style lang="scss" scoped>
 .product{
   display: flex;
-  width: 1000px;
-}  
+  width: 100%;
+  margin: 0 2rem;
+  flex-wrap: wrap;
+  @media screen and (max-width: 600px) {
+    margin: 0;
+    justify-content: center;
+  }
+}
+
+
 </style>

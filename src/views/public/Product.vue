@@ -4,10 +4,11 @@
         <div class="row">
           <div class="col-lg-6 py-3 order-2 order-lg-1">
             <div data-slider-id="1" class="owl-carousel owl-theme owl-dots-modern detail-full">
-              <div class="product__img detail-full-item" :style="{'background': getProductImg, ' background-repeat': 'no-repeat'}" >     </div>
+              <div class="product__img detail-full-item" :style="{'background': getProductImg, 'background-repeat': 'no-repeat'}" >     </div>
             </div>
           </div>
           <div class="d-flex align-items-center col-lg-6 col-xl-5 pl-lg-5 mb-5 order-1 order-lg-2">
+
             <div>
               <ul class="breadcrumb justify-content-start">
                 <li class="breadcrumb-item">
@@ -59,12 +60,13 @@
                     <label class="detail-option-heading font-weight-bold">Cantidad
                       <span>*</span>
                     </label>
-                    <input v-model="newOrderItem.quantity" name="cantidad" type="number" class="form-control detail-quantity">
+                    <input :disabled="product.totalStock === 0" v-model="newOrderItem.quantity" name="cantidad" type="number" class="form-control detail-quantity">
                   </div>
                 </div>
+              <div class="ribbon ribbon-danger" v-if="product.totalStock === 0">Sold out</div>
                 <ul class="list-inline">
                   <li class="list-inline-item">
-                    <button @click.prevent="addItem" class="btn btn-dark btn-lg mb-1"> <i class="fa fa-shopping-cart mr-2"></i>Añadir al carrito</button>
+                    <button :disabled="product.totalStock === 0" @click.prevent="addItem" class="btn btn-dark btn-lg mb-1"> <i class="fa fa-shopping-cart mr-2"></i>Añadir al carrito</button>
                   </li>
                 </ul>
               </form>
@@ -166,4 +168,10 @@ export default {
     background: center center;
     background-size: cover;
 }
+.product{
+  &__img{
+    background-repeat: no-repeat !important;
+  }
+}
+
 </style>

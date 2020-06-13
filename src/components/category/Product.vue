@@ -1,10 +1,12 @@
 <template>
   <article>
     <div class="col-xl-4 col-sm-6">
-      <div class="product">
+      <div class="product mx-4">
         <div class="product-image">
-          <div v-if="content.promotionOn" class="ribbon ribbon-primary">En Oferta</div>
-          <img :src="content.img" alt="product" class="img-fluid"/>
+          <div v-if="content.promotionOn" class="ribbon ribbon-primary">Oferta</div>
+          <div class="ribbon ribbon-info" v-if="content.accesory">Accesorio</div>
+          <div class="ribbon ribbon-danger" v-if="content.totalStock === 0">Sold out</div>
+          <img :src="content.img" alt="product" class="img"/>
           <div class="product-hover-overlay">
             <router-link :to="getRoute"></router-link>
             <div class="product-hover-overlay-buttons">
@@ -15,13 +17,13 @@
             </div>
           </div>
         </div>
-        <div class="py-2">
+        <div class="py-4">
           <h3 class="h6 text-uppercase mb-1">
             <router-link  class="text-dark" :to="getRoute">
               {{content.name}}  
             </router-link>
           </h3>
-          <span class="text-muted">€ {{content.salePrice}}</span>
+          <span class="text-muted">€{{content.salePrice}}</span>
         </div>
       </div>
     </div>
@@ -41,3 +43,14 @@
     },
   }
 </script>
+<style lang="scss" scoped>
+  .img{
+    width: 200px;
+    height: 330px;
+    object-fit: contain;
+  }
+  .product-hover-overlay {
+    width: 200px;
+    height: 330px;
+  }
+</style>
