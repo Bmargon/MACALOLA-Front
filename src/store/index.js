@@ -11,7 +11,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   getters: {
     getGlobalConfig (state) {
-      return state.globalConfig}
+      return state.globalConfig
+    },
+    getGlobalConfigCarousel (state) {
+      return JSON.parse(state.globalConfig.carousel)
+    }
   },
   state: {
     globalConfig : {}
