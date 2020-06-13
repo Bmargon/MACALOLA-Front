@@ -14,10 +14,10 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto" center>
         <b-nav-item :to="{name: 'home'}">HOME</b-nav-item>
-        <b-nav-item :to="{path: '/c/ofertas'}">OFERTAS</b-nav-item>
+        <b-nav-item @click="handleCategory" :to="{path: '/c/ofertas'}">OFERTAS</b-nav-item>
 
         <b-nav-item-dropdown text="PRODUCTOS" right>
-          <b-dropdown-item v-for="(item, i) in categories" :key="i" @click="handleCategory(item)">{{item.name}}</b-dropdown-item>
+          <b-dropdown-item @click="handleCategory" v-for="(item, i) in categories" :key="i" :to="{path: '/c/' + item.name.toLowerCase()}">{{item.name}}</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <b-nav-item :to="{name: 'contact'}" >CONTACTANOS</b-nav-item>
@@ -68,15 +68,7 @@ export default {
   },
   methods: {
     ...mapActions(['getCategories']),
-    handleCategory(item) {
-      let path = '/c/' + item.name.toLowerCase()
-      if (this.$route.params.ref ) {
-        this.$router.push({path})
-      }
-      if (this.$route.params.cat === item.name.toLowerCase()) {
-        return
-      }
-      this.$router.push({path })
+    handleCategory() {
       EventBus.$emit('refresh' )
     }
   },

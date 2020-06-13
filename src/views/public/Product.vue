@@ -166,7 +166,10 @@ export default {
 <style lang="scss" scoped>
 .detail-full-item {
     background: center center;
-    background-size: cover;
+    background-size: contain;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 }
 .product{
   &__img{

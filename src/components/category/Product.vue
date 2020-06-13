@@ -23,7 +23,7 @@
               {{content.name}}  
             </router-link>
           </h3>
-          <span class="text-muted">€{{content.salePrice}}</span>
+          <span class="text-muted">{{content.salePrice}}€</span>
         </div>
       </div>
     </div>
