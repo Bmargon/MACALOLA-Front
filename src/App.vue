@@ -20,8 +20,8 @@ export default {
       }
     }
   },
-  beforeMount() {
-    this.getGlobalConfig() 
+  mounted() {
+    this.getGlobalConfig()
   }
 }
 </script>
