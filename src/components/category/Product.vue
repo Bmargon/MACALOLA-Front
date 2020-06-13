@@ -3,7 +3,7 @@
     <div class="col-xl-4 col-sm-6">
       <div class="product mx-4">
         <div class="product-image">
-          <div v-if="content.promotionOn" class="ribbon ribbon-primary">Oferta</div>
+          <div v-if="content.promotionOn && !isOffertsURL" class="ribbon ribbon-primary">Oferta</div>
           <div class="ribbon ribbon-info" v-if="content.accesory">Accesorio</div>
           <div class="ribbon ribbon-danger" v-if="content.totalStock === 0">Sold out</div>
           <img :src="content.img" alt="product" class="img"/>
@@ -39,6 +39,9 @@
         return {
           path: '/i/' + this.$route.params.cat + '/' + this.content.referenceNumberCommon
         }
+      },
+      isOffertsURL () {
+        return this.$route.params.cat === 'ofertas'
       }
     },
   }

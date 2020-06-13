@@ -11,7 +11,7 @@
               </span>       
               <div class="service-text">
                 <h6 class="text-uppercase">Envío gratis</h6>
-                <p class="text-muted font-weight-light text-sm mb-0">a partir de {{getGlobalConfig.sendPrice}} €</p>
+                <p class="text-muted font-weight-light text-sm mb-0">a partir de {{getGlobalConfig.moneyBack}} €</p>
               </div>
             </div>
             <div class="col-lg-4 service-column">
@@ -20,7 +20,7 @@
               </span>
               <div class="service-text">
                 <h6 class="text-uppercase">Garantía de devolución</h6>
-                <p class="text-muted font-weight-light text-sm mb-0">Hasta {{getGlobalConfig.moneyBack}} para devolver los productos</p>
+                <p class="text-muted font-weight-light text-sm mb-0">Hasta 15 días para devolver los productos</p>
               </div>
             </div>
             <div class="col-lg-4 service-column">

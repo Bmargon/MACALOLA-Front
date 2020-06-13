@@ -7,11 +7,11 @@
           <li class="breadcrumb-item">
             <router-link :to="{name: 'home'}">Home</router-link>
           </li>
-          <li class="breadcrumb-item active">Contact        </li>
+          <li class="breadcrumb-item active">Contacta con nosotros        </li>
         </ol>
         <!-- Hero Content-->
         <div class="hero-content pb-5 text-center">
-          <h1 class="hero-heading">Contact</h1>
+          <h1 class="hero-heading">Contactar</h1>
           <div class="row">   
             <div class="col-xl-8 offset-xl-2"><p class="lead text-muted">Are you curious about something?  As am hastily invited settled at limited civilly fortune me. Really spring in extent an by. Judge but built party world. Of so am he remember although required. Bachelor unpacked be advanced at. Confined in declared marianne is vicinity.</p></div>
           </div>
@@ -53,7 +53,7 @@
      <section class="py-6">
       <div class="container">
         <header class="mb-5">
-          <h2 class="text-uppercase h5">Contact form</h2>
+          <h2 class="text-uppercase h5">Formulario de contacto</h2>
         </header>
         <div class="row">
           <div class="col-md-7 mb-5 mb-md-0">
@@ -68,7 +68,7 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label for="surname" class="form-label">Your lastname *</label>
+                      <label for="surname" class="form-label">Apellido *</label>
                       <input required v-model="form.surname" type="text" name="surname"   class="form-control">
                     </div>
                   </div>
@@ -81,7 +81,7 @@
                   <label for="message" class="form-label">Mesaje que quieres que recibamos</label>
                   <textarea v-model="form.message" rows="4" name="message"  required="required" class="form-control"></textarea>
                 </div>
-                <button @click.prevent="sendRequest" class="btn btn-outline-dark">Enviar solicitud</button>
+                <button @click.prevent="sendRequest" class="btn btn-outline-dark">Enviar</button>
               </div>
             </form>
           </div>

@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-    <div class="container">
+    <div class="container" v-if="getTotalItems">
         <div class="row mb-5"> 
           <div class="col-lg-8">
             <div class="cart">
@@ -69,7 +69,7 @@
                 </router-link >
               </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-4" v-if="getTotalItems">
             <div class="block mb-5">
               <div class="block-header">
                 <h6 class="text-uppercase mb-0">Resumen del pedido</h6>
@@ -78,8 +78,8 @@
                 <p class="text-sm">Gastos de envio gratuitos a partir de pedidos de {{getGlobalConfig.moneyBack}} €</p>
                 <ul class="order-summary mb-0 list-unstyled">
                   <li class="order-summary-item"><span>Resumen de compra </span><span>{{getTotalAmount}} €</span></li>
-                  <li class="order-summary-item" v-if="!freeShipping"><span>Gastos de envio</span><span>{{getGlobalConfig.moneyBack}} €</span></li>
-                  <li class="order-summary-item" v-if="freeShipping"><span>Gastos de envio</span><span><del>{{getGlobalConfig.moneyBack}}</del> €</span></li>
+                  <li class="order-summary-item" v-if="!freeShipping"><span>Gastos de envio</span><span>{{getGlobalConfig.sendPrice}} €</span></li>
+                  <li class="order-summary-item" v-if="freeShipping"><span>Gastos de envio</span><span><del>{{getGlobalConfig.sendPrice}}</del> €</span></li>
                   <li class="order-summary-item border-0"><span>Total</span><strong class="order-summary-total">{{ totalAmountWithSend }} €</strong></li>
                 </ul>
               </div>
@@ -108,7 +108,6 @@ export default {
   methods: {
     ...mapActions(['removeFromCart']),
     removeItem (i) {
-      console.log(i);
       this.removeFromCart(i)
     }
   }

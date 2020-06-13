@@ -30,7 +30,7 @@
         <div class="user-actions">
             <div class="nav-item">
                 <span style="font-size: 1.5em; color: #727272;">
-                  <router-link :to="{name: 'cart'}">
+                  <router-link :to="{name: 'user'}">
                     <i class="fas fa-user mr-4"></i>
                   </router-link>
                 </span>

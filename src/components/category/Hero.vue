@@ -6,11 +6,11 @@
           <li class="breadcrumb-item">
             <router-link :to="{name: 'home'}">Home</router-link>
           </li>
-          <li class="breadcrumb-item active">{{capitalize }}       </li>
+          <li class="breadcrumb-item active">{{capitalize}}</li>
         </ol>
         <!-- Hero Content-->
         <div class="hero-content pb-5 text-center">
-          <h1 class="hero-heading">{{ $route.params.cat}}</h1>
+          <h1 class="hero-heading">{{$route.params.cat}}</h1>
         </div>
       </div>
   </section>

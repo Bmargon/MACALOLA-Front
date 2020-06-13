@@ -17,9 +17,6 @@
           li(:class="[currentPath.includes('products') ? 'router-link-active' : '']")
             i(class="fas fa-boxes")
             router-link(:to="{name: 'products'}") Productos
-          li(:class="[currentPath.includes('users') ? 'router-link-active' : '']")
-            i(class="fas fa-user")
-            router-link(:to="{name: 'users'}") Usuarios
           li(:class="[currentPath.includes('template') ? 'router-link-active' : '']")
             i(class="fas fa-pager")
             router-link(:to="{name: 'template'}") Template

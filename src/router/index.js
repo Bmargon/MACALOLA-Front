@@ -14,6 +14,7 @@ const routes = [
     {path: '/i/:cat/:ref', name: 'productPublic', component: () => import('@/views/public/Product')},
     {path: 'contact', name: 'contact', component: () => import('@/views/public/Contact')},
     {path: 'cart', name: 'cart', component: () => import('@/views/public/Cart')},
+    {path: 'user', name: 'user', component: () => import('@/views/public/UserSign')},
   ] },
   // ==========================
   // PRIVATE ROUTES
@@ -31,7 +32,6 @@ const routes = [
       {path: 'orders', name: 'orders', component: () => import('@/views/admin/Orders')},
       {path: 'products', name: 'products', component: () => import('@/views/admin/Products')},
       {path: 'product/:ref', name: 'product', component: () => import('@/views/admin/GetSingleProduct')},
-      {path: 'users', name: 'users', component: () => import('@/views/admin/Users')},
       {path: 'returns', name: 'returns', component: () => import('@/views/admin/Returns')},
       {path: 'template', name: 'template', component: () => import('@/views/admin/Template')},
     ]}
