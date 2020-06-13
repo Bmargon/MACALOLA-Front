@@ -38,7 +38,8 @@ const routes = [
       // {path: 'orders', component: () => import('@/views/admin/Orders')}
  
   ]},
-  { path: "*", redirect: '/'}
+  { path: "**", redirect: {name: 'home'}},
+  { path: "", redirect: {name: 'home'}},
 ];
 
 
