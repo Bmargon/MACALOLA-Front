@@ -1,30 +1,41 @@
 <template >
   <section>
     <hero-category/>
-    <div class="product">
+    <grid-header-category></grid-header-category>
+    <div class="product container">
       <product-category
         v-for="(item, index) in products"
         :key="index"
         :content="item"
       />
     </div>
+    <Pagination
+      :totalProducts="totalProducts"
+      :totalProductsPerPage="1"
+      @updateProductsOnPageChange="updateProductsOnPageChange"
+    />
   </section>
 </template>
 <script>
 import axios from 'axios'
 import HeroCategory from '@/components/category/Hero'
+import GridHeaderCategory from '@/components/category/GridHeader'
+import Pagination from '@/components/shared/Pagination'
 import ProductCategory from '@/components/category/Product'
 import EventBus from '@/utils/EventBus'
-
 export default {
   name: 'Category',
   components: {
     HeroCategory,
-    ProductCategory
+    ProductCategory,
+    Pagination,
+    GridHeaderCategory
   },
   data() {
     return {
-      products: []
+      products: [],
+      from: 0,
+      totalProducts: 0
     }
   },
   methods: {
@@ -36,13 +47,22 @@ export default {
           this.products = response.data.productDB
 
         } else {
-          let url = process.env.VUE_APP_URL + '/bycategory/' + this.$route.params.cat
-          let response = await axios.get(url)
+          let url = process.env.VUE_APP_URL + '/bycategory/' + this.$route.params.cat 
+          let response = await axios.get(url, {
+            params: {
+              from : this.from
+            }
+          })
+          this.totalProducts = response.data.total
           this.products = response.data.productsDB
         }
       } catch (error) {
         console.log('error', error)
       }
+    },
+    updateProductsOnPageChange(page) {
+      this.from = page
+      this.getProducts()
     }
   },
   created() {
@@ -57,8 +77,6 @@ export default {
 <style lang="scss" scoped>
 .product{
   display: flex;
-  width: 100%;
-  margin: 0 2rem;
   flex-wrap: wrap;
   @media screen and (max-width: 600px) {
     margin: 0;

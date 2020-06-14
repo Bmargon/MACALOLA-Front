@@ -12,13 +12,10 @@ export default new Vuex.Store({
   getters: {
     getGlobalConfig (state) {
       return state.globalConfig
-    },
-    getGlobalConfigCarousel (state) {
-      return JSON.parse(state.globalConfig.carousel)
     }
   },
   state: {
-    globalConfig : {}
+    globalConfig : ''
   },
   mutations: {
     'SET_GLOBAL_CONFIG' (state, payload) {

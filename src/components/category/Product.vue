@@ -52,6 +52,9 @@
     height: 330px;
     object-fit: contain;
   }
+  .product-image{
+    width: 200px;
+  }
   .product-hover-overlay {
     width: 200px;
     height: 330px;
