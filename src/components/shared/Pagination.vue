@@ -35,6 +35,7 @@
         if (value <= 0 ) this.currentPage = 0
         if (value >= this.getPages.length) this.currentPage = this.getPages.length - 1
         this.updateProductsOnPageChange()
+        window.scrollTo(0,0);
       },
 
     },

@@ -44,6 +44,9 @@
         return this.$route.params.cat === 'ofertas'
       }
     },
+    mounted() {
+      window.scrollTo(0,0);
+    }
   }
 </script>
 <style lang="scss" scoped>

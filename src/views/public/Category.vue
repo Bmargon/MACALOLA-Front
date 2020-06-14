@@ -85,7 +85,10 @@ export default {
       this.getProducts()
     })
     this.getProducts();
-  }
+  },
+  mounted() {
+     window.scrollTo(0,0);
+  },
 }
 </script>
 
