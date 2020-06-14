@@ -75,13 +75,13 @@
                 </div>
                 <div class="form-group">
                   <label for="email" class="form-label">Correo electrónico</label>
-                  <input v-model="form.email" type="email" name="email"  required class="form-control">
+                  <input v-model="form.email" type="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email"  required class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="message" class="form-label">Mesaje que quieres que recibamos</label>
                   <textarea v-model="form.message" rows="4" name="message"  required="required" class="form-control"></textarea>
                 </div>
-                <button @click.prevent="sendRequest" class="btn btn-outline-dark">Enviar</button>
+                <button :disabled="checkFields" @click.prevent="sendRequest" class="btn btn-outline-dark">Enviar</button>
               </div>
             </form>
           </div>
@@ -114,6 +114,11 @@ export default {
         email: '',
         message: ''
       }
+    }
+  },
+  computed: {
+    checkFields () {
+      return this.form.name === '' || this.form.surname === '' || this.form.email === '' || this.form.message === ''
     }
   },
   methods: {
