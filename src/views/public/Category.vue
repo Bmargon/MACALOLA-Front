@@ -1,7 +1,10 @@
 <template >
   <section>
     <hero-category/>
-    <grid-header-category></grid-header-category>
+    <grid-header-category
+      :totalProducts="totalProducts"
+      @totalPerPage="totalPerPage"
+    />
     <div class="product container">
       <product-category
         v-for="(item, index) in products"
@@ -11,7 +14,7 @@
     </div>
     <Pagination
       :totalProducts="totalProducts"
-      :totalProductsPerPage="1"
+      :totalProductsPerPage="totalProductsPerPage"
       @updateProductsOnPageChange="updateProductsOnPageChange"
     />
   </section>
@@ -35,7 +38,8 @@ export default {
     return {
       products: [],
       from: 0,
-      totalProducts: 0
+      totalProducts: 0,
+      totalProductsPerPage: 20
     }
   },
   methods: {
@@ -43,17 +47,24 @@ export default {
       try {
         if (this.$route.params.cat === 'ofertas') {
         let url = process.env.VUE_APP_URL + '/offers'
-          let response = await axios.get(url)
-          this.products = response.data.productDB
+          let response = await axios.get(url, {
+            params: {
+              from : this.from,
+              total: this.totalProductsPerPage
+            }
+          })
+          this.totalProducts = response.data.productsDB.length
+          this.products = response.data.productsDB
 
         } else {
           let url = process.env.VUE_APP_URL + '/bycategory/' + this.$route.params.cat 
           let response = await axios.get(url, {
             params: {
-              from : this.from
+              from : this.from,
+              total: this.totalProductsPerPage
             }
           })
-          this.totalProducts = response.data.total
+          this.totalProducts = response.data.productsDB.length
           this.products = response.data.productsDB
         }
       } catch (error) {
@@ -61,7 +72,11 @@ export default {
       }
     },
     updateProductsOnPageChange(page) {
-      this.from = page
+      this.from = page * 19
+      this.getProducts()
+    },
+    totalPerPage(total) {
+      this.totalProductsPerPage = total
       this.getProducts()
     }
   },

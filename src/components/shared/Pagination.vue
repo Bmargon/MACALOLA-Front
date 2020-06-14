@@ -7,8 +7,8 @@
             <span aria-hidden="true">Anterior</span>
           </button>
         </li>
-        <li v-for="(item, i) in pageArray" :key="i" class="page-item" :class="{'active': i === currentPage }">
-          <button @click="handlePage(i)" class="page-link">{{item + 1}}</button>
+        <li v-for="(item, i) in getPages" :key="i" class="page-item" :class="{'active': i === currentPage }">
+          <button @click="handlePage(i)" class="page-link">{{i + 1}}</button>
         </li>
 
         <li class="page-item">
@@ -26,29 +26,26 @@
     props: ['totalProducts', 'totalProductsPerPage'],
     data() {
       return {
-        currentPage: 1,
-        pageArray: []
+        currentPage: 0,
       }
     },
 
     watch: {
       'currentPage' (value) {
-        if (value === -1) this.currentPage = 0
-        if (value === this.pageArray.length) this.currentPage = this.pageArray.length - 1
+        if (value <= 0 ) this.currentPage = 0
+        if (value >= this.getPages.length) this.currentPage = this.getPages.length - 1
         this.updateProductsOnPageChange()
       },
 
     },
-    methods: {
+    computed: {
       getPages() {
-        let pageArray = []
-        let totalPages = this.totalProducts / this.totalProductsPerPage - 1 
-        for (let i = 0; i < totalPages; i++) {
-          console.log('hola',i)
-          pageArray.push(i)
-        }
-        this.pageArray = pageArray
+        let totalPages = this.totalProducts / this.totalProductsPerPage
+        return new Array(Math.ceil(totalPages ))
       },
+    },
+    methods: {
+
       back () {
         this.currentPage -= 1
       },
@@ -61,9 +58,6 @@
       handlePage(i) {
         this.currentPage = i
       }
-    },
-    created() {
-      this.getPages()
     }
   }
 </script>
