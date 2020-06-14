@@ -53,7 +53,7 @@ export default {
               total: this.totalProductsPerPage
             }
           })
-          this.totalProducts = response.data.productsDB.length
+          this.totalProducts = response.data.total
           this.products = response.data.productsDB
 
         } else {
@@ -64,7 +64,7 @@ export default {
               total: this.totalProductsPerPage
             }
           })
-          this.totalProducts = response.data.productsDB.length
+          this.totalProducts = response.data.total
           this.products = response.data.productsDB
         }
       } catch (error) {
@@ -72,7 +72,7 @@ export default {
       }
     },
     updateProductsOnPageChange(page) {
-      this.from = page * 19
+      this.from = page * (this.totalProductsPerPage)
       this.getProducts()
     },
     totalPerPage(total) {

@@ -48,15 +48,15 @@
 </script>
 <style lang="scss" scoped>
   .img{
-    width: 200px;
+    width: 199px;
     height: 330px;
     object-fit: contain;
   }
   .product-image{
-    width: 200px;
+    width: 199px;
   }
   .product-hover-overlay {
-    width: 200px;
+    width: 199px;
     height: 330px;
   }
 </style>
