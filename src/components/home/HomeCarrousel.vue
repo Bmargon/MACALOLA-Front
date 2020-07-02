@@ -51,7 +51,13 @@ import {mapGetters} from 'vuex'
         return ( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 )
       },
       parseCarouser () {
-        return JSON.parse(this.getGlobalConfig.carousel)
+        if(this.getGlobalConfig !== undefined) {
+          try {
+            return JSON.parse(this.getGlobalConfig.carousel)
+          } catch (error) {
+            console.log(error)
+          }
+        } else return []
       }
     },
     methods: {

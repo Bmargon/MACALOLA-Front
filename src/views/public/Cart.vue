@@ -117,8 +117,7 @@ export default {
       this.refreshCart({index: i, item})
     },
     addOneItem (i, item) {
-            if (this.getCart[i].quantity === 1) return
-
+      if (this.getCart[i].quantity === 1) return
       this.getCart[i].quantity += 1
       this.refreshCart({index: i, item})
     }
