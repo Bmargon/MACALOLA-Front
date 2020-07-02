@@ -162,15 +162,22 @@ export default {
       }
     },
     async setConfig () {
-      let response = await this.getGlobalConfiguration.data.data
-        this.config.sendPrice = response.sendPrice
-        this.config.tlfContant = response.tlfContant
-        this.config.emailOnDisplay = response.emailOnDisplay
-        this.config.moneyBack = response.moneyBack
-        this.config.adress = response.adress
-        this.config.carousel = JSON.parse(response.carousel)
-        this.config.template = JSON.parse(response.template)
-        this.config.social = JSON.parse(response.social)
+      let url = process.env.VUE_APP_URL + '/set-config'
+      try {
+        let response = await axios.get(url)
+        console.log('hola', response);
+        this.config.sendPrice =       response.data.data.sendPrice
+        this.config.tlfContant =      response.data.data.tlfContant
+        this.config.emailOnDisplay =  response.data.data.emailOnDisplay
+        this.config.moneyBack =       response.data.data.moneyBack
+        this.config.adress =          response.data.data.adress
+        this.config.carousel = JSON.parse(response.data.data.carousel)
+        this.config.template = JSON.parse(response.data.data.template)
+        this.config.social = JSON.parse(response.data.data.social)
+
+      } catch (error) {
+        
+      }
     }      
   },
   created () {
