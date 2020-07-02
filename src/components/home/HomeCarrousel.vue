@@ -13,7 +13,7 @@
     v-model="slide"
     >
      <b-carousel-slide
-        v-for="(item, i) in parseCarouser"
+        v-for="(item, i) in parseCarouser ? parseCarouser : []"
         :key="i"
         :img-src="item.img"
       >     
@@ -51,13 +51,13 @@ import {mapGetters} from 'vuex'
         return ( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 )
       },
       parseCarouser () {
-        if(this.getGlobalConfig !== undefined) {
+        if(this.getGlobalConfig && this.getGlobalConfig.carousel) {
           try {
             return JSON.parse(this.getGlobalConfig.carousel)
           } catch (error) {
             console.log(error)
           }
-        } else return []
+        } else return
       }
     },
     methods: {
