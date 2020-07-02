@@ -20,14 +20,17 @@ const mutations = {
     state.cart.push(payload)
     state.totalItems = state.cart.length || 0
   },
-  'UPDATE_ORDER' (state, payload) {
+  'REMOVE_ITEM_CART' (state, payload) {
     state.cart.splice(payload, 1)
+    state.totalItems = state.cart.length || 0
   },
   'CALCULATE_AMOUNT' (state) {
-
     state.cart.forEach(item => {
-      state.totalAmount += item.price * item.quantity
+      state.totalAmount = item.price * item.quantity
     })
+  },
+  'REFRESH_CART' (state, payload) {
+    state.cart[payload.index] = payload.item
   }
 
 }
@@ -35,10 +38,13 @@ const actions = {
   addToCart ({commit}, order) {
     commit('SET_NEW_ORDER', order)
     commit('CALCULATE_AMOUNT')
-
   },
   removeFromCart ({commit}, index) {
-    commit('UPDATE_ORDER', index)
+    commit('REMOVE_ITEM_CART', index)
+    commit('CALCULATE_AMOUNT')
+  },
+  refreshCart ( {commit}, order) {
+    commit('REFRESH_CART', order)
     commit('CALCULATE_AMOUNT')
   }
 }

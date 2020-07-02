@@ -44,9 +44,9 @@
                       <div class="col-2">{{item.price}} €</div>
                       <div class="col-2">
                         <div class="d-flex align-items-center">
-                          <div @click="item.quantity--" class="btn btn-items btn-items-decrease">-</div>
+                          <div @click="restOneItem(i, item)" class="btn btn-items btn-items-decrease">-</div>
                           <input type="text" :value="item.quantity" class="form-control text-center input-items">
-                          <div @click="item.quantity++" class="btn btn-items btn-items-increase">+</div>
+                          <div @click="addOneItem(i,  item)" class="btn btn-items btn-items-increase">+</div>
                         </div>
                       </div>
                       <div class="col-2 text-center">{{item.quantity * item.price}} €</div>
@@ -92,6 +92,7 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 export default {
+
   computed: {
     ...mapGetters(['getTotalItems', 'getCart', 'getTotalAmount', 'getGlobalConfig']),
     freeShipping () {
@@ -106,9 +107,20 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['removeFromCart']),
+    ...mapActions(['removeFromCart', 'refreshCart']),
     removeItem (i) {
       this.removeFromCart(i)
+    },
+    restOneItem (i, item) {
+      if (this.getCart[i].quantity === 1) return
+      this.getCart[i].quantity -= 1
+      this.refreshCart({index: i, item})
+    },
+    addOneItem (i, item) {
+            if (this.getCart[i].quantity === 1) return
+
+      this.getCart[i].quantity += 1
+      this.refreshCart({index: i, item})
     }
   }
 }

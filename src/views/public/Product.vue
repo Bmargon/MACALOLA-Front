@@ -152,13 +152,26 @@ export default {
       this.newOrderItem.img = this.product.img
       this.newOrderItem.name = this.product.name
       this.addToCart(this.newOrderItem)
-      // this.newOrderItem.referenceNumberCommon = ''
-      // this.newOrderItem.quantity = 1
-      // this.newOrderItem.size = ''
-      // this.newOrderItem.refNumber = ''
+      this.clearForm()
     },
+    clearForm () {
+      this.$bvToast.toast('correctamente', {
+        title: `Producto añadido`,
+          variant: 'success',
+          solid: true
+        })
+      this.newOrderItem = {
+        referenceNumberCommon: '',
+        refNumber: '',
+        size: '',
+        price: '',
+        quantity: 1
+      }
+      window.scrollTo(0,0);
+    }
   },
   created() {
+    window.scrollTo(0,0);
     this.getProduct()
   }
 }

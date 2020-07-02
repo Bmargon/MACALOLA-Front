@@ -6,7 +6,7 @@
           <div v-if="content.promotionOn && !isOffertsURL" class="ribbon ribbon-primary">Oferta</div>
           <div class="ribbon ribbon-info" v-if="content.accesory">Accesorio</div>
           <div class="ribbon ribbon-danger" v-if="content.totalStock === 0">Sold out</div>
-          <img :src="content.img" alt="product" class="img"/>
+          <b-img-lazy :src="content.img" alt="product" class="img"/>
           <div class="product-hover-overlay">
             <router-link :to="getRoute"></router-link>
             <div class="product-hover-overlay-buttons">

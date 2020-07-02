@@ -3,7 +3,7 @@
     <nav aria-label="page navigation" class="d-flex justify-content-center mb-5 mt-3">
       <ul class="pagination">
         <li class="page-item">
-          <button @click="back" aria-label="Previous" class="page-link">
+          <button @click="currentPage -= 1" aria-label="Previous" class="page-link">
             <span aria-hidden="true">Anterior</span>
           </button>
         </li>
@@ -12,7 +12,7 @@
         </li>
 
         <li class="page-item">
-          <button @click="next" aria-label="Next" class="page-link">
+          <button @click="currentPage += 1" aria-label="Next" class="page-link">
             <span aria-hidden="true">Siguiente</span>
           </button>
         </li>
@@ -46,13 +46,6 @@
       },
     },
     methods: {
-
-      back () {
-        this.currentPage -= 1
-      },
-      next() {
-        this.currentPage += 1
-      },
       updateProductsOnPageChange () {
         this.$emit('updateProductsOnPageChange', this.currentPage)
       },
