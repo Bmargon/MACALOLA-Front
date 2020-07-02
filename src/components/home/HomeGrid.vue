@@ -63,7 +63,13 @@ export default {
     computed: {
     ...mapGetters(['getGlobalConfig']),
      parseGrid() {
-        return JSON.parse(this.getGlobalConfig.template)
+      if(this.getGlobalConfig && this.getGlobalConfig.template) {
+          try {
+            return JSON.parse(this.getGlobalConfig.template)
+          } catch (error) {
+            console.log(error)
+          }
+        } else return ''
       }
   }
 }
