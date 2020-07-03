@@ -38,11 +38,17 @@
               </div>
 
 
-              <div class="nav-item ">
+              <div class="nav-item mr-4">
                 <span  style="font-size: 1.5em; color: #727272;">
                   <router-link :to="{name: 'cart'}">
-                    <i class="fas fa-shopping-cart mr-4"></i>
+                    <i  class="fas fa-shopping-cart "></i>
                   </router-link>
+                  <b-badge
+                    v-if="getTotalItems >= 1"
+                    class="cart-pill" 
+                    pill variant="dark">
+                      {{getTotalItems}}
+                  </b-badge>
                 </span>
                   
               </div>
@@ -87,6 +93,12 @@ img{
   @media screen and (max-width: 600px) {
     margin: 0;
   }
+}
+.cart-pill {
+  position: absolute;
+    left: 15px;
+    bottom: 20px;
+
 }
 .user-actions{
   display: flex;
