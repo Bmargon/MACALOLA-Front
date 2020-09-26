@@ -36,8 +36,8 @@
                         <div class="d-flex align-items-center"><a href="detail.html">
                           <img :src="item.img" alt="..." class="cart-item-img"></a>
                           <div class="cart-title text-left">
-                            <a href="detail.html" class="text-uppercase text-dark">
-                              <strong>{{item.name}}</strong></a><br><span class="text-muted text-sm">Size: Large</span><br><span class="text-muted text-sm">Colour: Green</span>
+                              <strong>{{item.name}}</strong>
+                            <br><span class="text-muted text-sm">Size: Large</span><br><span class="text-muted text-sm">Colour: Green</span>
                           </div>
                         </div>
                       </div>
@@ -45,7 +45,7 @@
                       <div class="col-2">
                         <div class="d-flex align-items-center">
                           <div @click="restOneItem(i, item)" class="btn btn-items btn-items-decrease">-</div>
-                          <input type="text" :value="item.quantity" class="form-control text-center input-items">
+                          <input disabled type="text" :value="item.quantity" class="form-control text-center input-items">
                           <div @click="addOneItem(i,  item)" class="btn btn-items btn-items-increase">+</div>
                         </div>
                       </div>
@@ -112,12 +112,12 @@ export default {
       this.removeFromCart(i)
     },
     restOneItem (i, item) {
-      if (this.getCart[i].quantity === 1) return
+      if (this.getCart[i].quantity < 1) return
       this.getCart[i].quantity -= 1
       this.refreshCart({index: i, item})
     },
     addOneItem (i, item) {
-      if (this.getCart[i].quantity === 1) return
+      if (this.getCart[i].quantity >=  this.getCart[i].totalStock) return
       this.getCart[i].quantity += 1
       this.refreshCart({index: i, item})
     }

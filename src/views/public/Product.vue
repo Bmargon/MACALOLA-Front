@@ -151,6 +151,7 @@ export default {
       this.newOrderItem.price = this.product.salePrice * this.newOrderItem.quantity
       this.newOrderItem.img = this.product.img
       this.newOrderItem.name = this.product.name
+      this.newOrderItem.totalStock = this.product.totalStock
       this.addToCart(this.newOrderItem)
       this.clearForm()
     },
